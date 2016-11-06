@@ -18,12 +18,12 @@
 
 # Dependency
 
-| elements                                                             | description |
-|----------------------------------------------------------------------|-------------|
-| [redux](https://github.com/reactjs/redux)                            |             |
-| [riot-routehandler](https://github.com/crisward/riot-routehandler)   |             |
-| [bulma](http://bulma.io)                                             |             |
-| [Fetch API](https://developer.mozilla.org/ja/docs/Web/API/Fetch_API) |             |
-| [ES2015 (ES6)](http://qiita.com/tuno-tky/items/74ca595a9232bcbcd727) |             |
+| elements                                                             | description        |
+|----------------------------------------------------------------------|--------------------|
+| [redux](https://github.com/reactjs/redux)                            | Riot 本体          |
+| [riot-routehandler](https://github.com/crisward/riot-routehandler)   | ルーター           |
+| [bulma](http://bulma.io)                                             | CSS フレームワーク |
+| [Fetch API](https://developer.mozilla.org/ja/docs/Web/API/Fetch_API) | Http Request       |
+| [ES2015 (ES6)](http://qiita.com/tuno-tky/items/74ca595a9232bcbcd727) | ECMAScript         |
 
 詳細は [dependencies.md](./doc/dependencies.md) 参照。
