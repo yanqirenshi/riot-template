@@ -27,3 +27,10 @@
 ** CSS
 
 - [bulma](http://bulma.io)
+
+** Http request
+
+[Fetch API](https://developer.mozilla.org/ja/docs/Web/API/Fetch_API) を利用します。
+
+- [Fetch 概説](https://developer.mozilla.org/ja/docs/Web/API/Fetch_API/Using_Fetch)
+- [お疲れさまXMLHttpRequest、こんにちはfetch](http://qiita.com/tomoyukilabs/items/9b464c53450acc0b9574)
