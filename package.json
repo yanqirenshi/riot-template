@@ -7,5 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "yanqirenshi@gmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "bulma": "^0.2.3",
+    "redux": "^3.6.0",
+    "riot-routehandler": "^1.2.3"
+  }
 }
