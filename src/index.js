@@ -1,23 +1,45 @@
 var riot = require('riot');
 var redux = require('redux');
 
-require('./tags/sample-output.tag');
-require('./tags/title-form.tag');
+/* ************************ *
+ *  Load Tags
+ * ************************ */
+// parts
+require('./tags/parts/sample-output.tag');
+require('./tags/parts/title-form.tag');
+require('./tags/parts/toolbar.tag');
+// screen
+require('./tags/home.tag');
+require('./tags/about.tag');
+require('./tags/sign-in.tag');
+require('./tags/sign-out.tag');
+require('./tags/not-found.tag');
 
-var reducer = function (state={title:'Default title'}, action) {
-    switch (action.type) {
-        case 'CHANGE_TITLE':
-            return Object.assign({},state,{title: action.data});
-        default:
-            return state;
+
+/* ************************ *
+ *  Store
+ * ************************ */
+var store = redux.createStore(
+    require('./redux/dispacher.js'),
+    {
+        user: null,
+        title: 'Default Title'
     }
-};
+);
 
-var reduxStore = redux.createStore(reducer);
 
+/* ************************ *
+ *  Router
+ * ************************ */
+var router = require('./router.js');
+
+/* ************************ *
+ *  Main
+ * ************************ */
 document.addEventListener('DOMContentLoaded', () => {
     riot.mount(
         '*',
-        {store: reduxStore}
+        {store: store}
     );
+    router.start();
 });

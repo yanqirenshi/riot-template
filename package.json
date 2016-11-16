@@ -14,7 +14,6 @@
     "babel-loader": "^6.2.7",
     "babel-preset-es2015": "^6.18.0",
     "file-loader": "^0.9.0",
-    "riot-routehandler": "^1.2.3",
     "tag-loader": "^0.3.0",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
@@ -22,6 +21,6 @@
   "dependencies": {
     "redux": "^3.6.0",
     "riot": "^2.6.7",
-    "riot-routehandler": "^1.2.3"
+    "riot-router": "^0.8.1"
   }
 }
