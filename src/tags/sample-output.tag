@@ -1,6 +1,9 @@
 <sample-output>
     <h1>{this.opts.store.getState().title}</h1>
-    <p>
-        PPPP!!!!
-    </p>
+
+    <script>
+     this.opts.store.subscribe(function () {
+         this.update();
+     }.bind(this));
+    </script>
 </sample-output>

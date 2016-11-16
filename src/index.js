@@ -1,16 +1,24 @@
 var riot = require('riot');
 var redux = require('redux');
+// var router = require('riot-routehandler');
 
 require('./tags/sample-output.tag');
+require('./tags/title-form.tag');
 
 var reducer = function (state={title:'Default title'}, action) {
-    return state;
+    switch (action.type) {
+        case 'CHANGE_TITLE':
+            return Object.assign({},state,{title: action.data});
+        default:
+            return state;
+    }
 };
 
 var reduxStore = redux.createStore(reducer);
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log(reduxStore.getState());
-    console.log(reduxStore.getState().title);
-    riot.mount('sample-output', {store: reduxStore});
+    riot.mount(
+        '*',
+        {store: reduxStore}
+    );
 });

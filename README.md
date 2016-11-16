@@ -5,11 +5,11 @@
 __TODO__
 
 - Redux
-  1. [Riot and Redux - Part 2](https://youtu.be/DgM03bvgCYc)
-  1. [Riot and Redux - Part 3](https://youtu.be/QuwnbuneAzM)
-  1. [Riot and Redux - Part 4](https://youtu.be/qc6bjtu7KG0)
-  1. [Riot and Redux - Part 5](https://youtu.be/M4BNsRMatVY)
-  1. [Riot and Redux - Part 6](https://youtu.be/jr8KDpwtRsk)
+  1. [x] [Riot and Redux - Part 2](https://youtu.be/DgM03bvgCYc)
+  1. [x] [Riot and Redux - Part 3](https://youtu.be/QuwnbuneAzM)
+  1. [ ] [Riot and Redux - Part 4](https://youtu.be/qc6bjtu7KG0)
+  1. [ ] [Riot and Redux - Part 5](https://youtu.be/M4BNsRMatVY)
+  1. [ ] [Riot and Redux - Part 6](https://youtu.be/jr8KDpwtRsk)
 - Router
   1. [riot-routehandler](https://github.com/crisward/riot-routehandler)
 - Ajax
