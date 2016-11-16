@@ -1,6 +1,5 @@
 var riot = require('riot');
 var redux = require('redux');
-// var router = require('riot-routehandler');
 
 require('./tags/sample-output.tag');
 require('./tags/title-form.tag');
