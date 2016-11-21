@@ -8,7 +8,7 @@
     </form>
 
     <script>
-     var actions = require('../../actions/actions.js');
+     var actions = require('../../redux/actions.js');
      onClick () {
          this.opts.store.dispatch(
              actions.changeTitle('New Title')
