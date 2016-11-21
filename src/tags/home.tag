@@ -1,15 +1,25 @@
 <home>
-    <toolbar></toolbar>
-
-    <sample-output store={this.opts.store}>
-    </sample-output>
-
+    <toolbar/>
+    <sample-output store={this.store} actions={this.actions}/>
     <hr/>
+    <title-form store={this.store} />
 
-    <title-form store={this.opts.store}>
-    </title-form>
+    <todo-app tasks={this.state.tasks} actions={this.actions} />
 
     <script>
-     var store = this.opts.store;
+     var opts = this.opts;
+     this.store = opts.store;
+     this.actions = opts.actions;
+
+     /* タグのマウント時にアクションを実行しデータを取得する。*/
+     this.on('mount', function () {
+         this.store.dispatch(this.actions.loadTasks());
+     }.bind(this));
+
+     /* ストア変更時の処理 */
+     this.store.subscribe(function () {
+         this.state = this.store.getState();
+         this.update();
+     }.bind(this));
     </script>
 </home>
