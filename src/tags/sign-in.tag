@@ -15,7 +15,7 @@
                    placeholder="Email"
                    onchange={onChange} />
             <br/>
-            <input type="text" name="email" class="input"
+            <input type="password" name="email" class="input"
                    placeholder="Password"
                    onchange={onChange} />
             <br/>
