@@ -11,7 +11,6 @@ var actions = require('./redux/actions.js');
  全部のタグをここでロードするのは。。。。。
  */
 // parts
-require('./tags/parts/sample-output.tag');
 require('./tags/parts/title-form.tag');
 require('./tags/parts/toolbar.tag');
 require('./tags/parts/todo-app.tag');

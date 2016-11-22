@@ -1,7 +1,6 @@
 <home>
     <toolbar title={this.title} />
-    <sample-output store={this.store} actions={this.actions}/>
-    <hr/>
+
     <title-form store={this.store} />
 
     <todo-app tasks={this.state.tasks} actions={this.actions} />
