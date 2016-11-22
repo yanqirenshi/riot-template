@@ -2,7 +2,6 @@
  reducerは、現在のstateとactionを受けて新しいstateを返すだけの純粋なメソッドです。
  */
 var reducer = function (state={tasks:[]}, action) {
-    console.log(action);
     switch (action.type) {
     case 'TASKS_LOADED':
         /*

@@ -32,12 +32,7 @@
 
     <script>
      var store = this.opts.store;
-     onClick (a,b,c) {
-         console.log([a,b,c]);
-     }
-
-     onChange (a,b,c) {
-         console.log([a,b,c]);
-     }
+     onClick (a,b,c) {}
+     onChange (a,b,c) {}
     </script>
 </sign-in>

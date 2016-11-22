@@ -17,7 +17,7 @@
     </script>
 
     <style scoped>
-        :scope
+     :scope
      form { padding: 8px 22px 8px 22px; }
     </style>
 </title-form>
