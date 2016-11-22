@@ -15,4 +15,9 @@
          );
      }
     </script>
+
+    <style scoped>
+        :scope
+     form { padding: 8px 22px 8px 22px; }
+    </style>
 </title-form>

@@ -1,5 +1,5 @@
 <home>
-    <toolbar/>
+    <toolbar title={this.title} />
     <sample-output store={this.store} actions={this.actions}/>
     <hr/>
     <title-form store={this.store} />
@@ -21,5 +21,8 @@
          this.state = this.store.getState();
          this.update();
      }.bind(this));
+
+     /* Title */
+     this.title = this.store.getState().title;
     </script>
 </home>
