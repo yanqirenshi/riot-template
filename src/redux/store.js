@@ -8,7 +8,7 @@ var createStoreWithMiddleware = redux.compose(
 var store = createStoreWithMiddleware(
     require('./reducer.js'),
     {
-        title:'Default Title',
+        title:'Riot Template',
         tasks:[]
     }
 );
