@@ -1,3 +1,5 @@
+var ajax = require('../util/ajax.js');
+
 module.exports = {
     changeTitle: changeTitle,
     loadTasks: loadTasks
@@ -12,16 +14,10 @@ function changeTitle (newTitle) {
 
 function loadTasks () {
     return function (dispatch, getState) {
-        var request = new XMLHttpRequest();
         var uri = 'https://api.github.com/users/yanqirenshi/repos';
-        request.open('GET', uri, true);
-        request.onload = function () {
-            if (request.status >= 200 && request.status < 400) {
-                var data = JSON.parse(request.responseText);
-                dispatch(tasksLoaded(data));
-            }
-        };
-        request.send();
+        ajax.get(uri, function (json) {
+            dispatch(tasksLoaded(json));
+        });
     };
 }
 
