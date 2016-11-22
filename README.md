@@ -14,12 +14,13 @@ __TODO__
 - Router
   1. [x] [riot-routehandler](https://github.com/crisward/riot-routehandler)
 - Ajax
-  1. [Riot.jsでAjaxではなくFetchを使って標準的なやりかたでAPIを取得する](http://qiita.com/aggre/items/c36d8fe34551569e2e6f)
+  1. [x] [Riot.jsでAjaxではなくFetchを使って標準的なやりかたでAPIを取得する](http://qiita.com/aggre/items/c36d8fe34551569e2e6f)
 - Sign-In/Sign-Out
-  1. [ ] Twitter
+  1. [node-oauth](https://github.com/ciaranj/node-oauth)
+     - [ ] Twitter
+     - [ ] Github
   1. [ ] Google
   1. [ ] Facebook
-  1. [ ] Github
   1. [ ] Email
 
 ## 解決したい問題
