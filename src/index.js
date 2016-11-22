@@ -15,6 +15,7 @@ require('./tags/parts/title-form.tag');
 require('./tags/parts/toolbar.tag');
 require('./tags/parts/todo-app.tag');
 require('./tags/parts/task-list.tag');
+require('./tags/parts/sign-in-sns.tag');
 
 // screen
 require('./tags/home.tag');
