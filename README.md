@@ -41,6 +41,12 @@ npm i
 npm run dev
 ```
 
+```js
+location /riot/ {
+    alias c:/your/deploy/path/;
+}
+```
+
 # サイトマップ
 
 | url                                                       | 概要                                                      |

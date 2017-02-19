@@ -1,0 +1,24 @@
+html, body {
+    width:100%;
+}
+
+app {
+    width:100%;
+    display:block;
+}
+
+.display-none {
+    display: none;
+}
+
+/* activities */
+activity-card {
+}
+
+/* gtd-menu */
+gtd-menu {
+    z-index: 111;
+    position: fixed;
+    bottom: 11px;
+    right: 11px;
+}
