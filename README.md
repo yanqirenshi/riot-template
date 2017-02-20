@@ -2,44 +2,20 @@
 
 [riot](https://github.com/riot/riot) を使ってシングルページアプリケーションを構築するためのテンプレートです。
 
-__TODO__
-
-- Redux
-  1. [x] [Riot and Redux - Part 1](https://youtu.be/Y6vpKAGT2-8)
-  1. [x] [Riot and Redux - Part 2](https://youtu.be/DgM03bvgCYc)
-  1. [x] [Riot and Redux - Part 3](https://youtu.be/QuwnbuneAzM)
-  1. [x] [Riot and Redux - Part 4](https://youtu.be/qc6bjtu7KG0)
-  1. [ ] [Riot and Redux - Part 5](https://youtu.be/M4BNsRMatVY)
-  1. [ ] [Riot and Redux - Part 6](https://youtu.be/jr8KDpwtRsk)
-- Router
-  1. [x] [riot-routehandler](https://github.com/crisward/riot-routehandler)
-- Ajax
-  1. [x] [Riot.jsでAjaxではなくFetchを使って標準的なやりかたでAPIを取得する](http://qiita.com/aggre/items/c36d8fe34551569e2e6f)
-- Sign-In/Sign-Out
-  1. [node-oauth](https://github.com/ciaranj/node-oauth)
-     - [ ] Twitter
-     - [ ] Github
-  1. [ ] Google
-  1. [ ] Facebook
-  1. [ ] Email
+置くだけて使えます。
 
 ## 解決したい問題
 
-サインイン、サンインアウト、サインアップを都度作るのが面倒なのでそのテンプレートです。
+シンプルかつ速やかにWEBページを書きたいだけなんです。
+
+コンパイルはしません。
+面倒だし、嫌いだから。
 
 # 使い方
 
-## インストール
-
-```shell-session
-npm i
-```
-
 ## 実行
 
-```shell-session
-npm run dev
-```
+nginx.conf とかに追加するだけで動きます。
 
 ```js
 location /riot/ {
