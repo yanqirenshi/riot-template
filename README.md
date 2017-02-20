@@ -37,9 +37,12 @@ location /riot/ {
 | elements                                                               | description        |
 |------------------------------------------------------------------------|--------------------|
 | [redux](https://github.com/reactjs/redux)                              | Riot 本体          |
-| [riot-router](http://gabrielmoreira.github.io/riot-router)             | ルーター           |
 | [bulma](http://bulma.io)                                               | CSS フレームワーク |
-| [Fetch API](https://developer.mozilla.org/ja/docs/Web/API/Fetch_API)   | Http Request       |
 | [ES2015 (ES6)](http://qiita.com/tuno-tky/items/74ca595a9232bcbcd727)   | ECMAScript         |
 
-- 詳細は [dependencies.md](./doc/dependencies.md) 参照。
+# Todo
+
+- [ ] /sign/in
+- [ ] /sign/out
+- [ ] /sign/d3/jobnet
+- [ ] /sign/d3/guntt
