@@ -1,4 +1,4 @@
-class Graph {
+class NetworkGraph {
     constructor(x, y, w, h) {
         this.svg = null;
         this.nodes = [];
@@ -30,6 +30,12 @@ class Graph {
                 + h;
 
         this.svg.attr('viewBox', viewbox);
+    }
+    setCallbacks (callbacks) {
+        if (this.callbacks)
+            this.callbacks = callbacks;
+        else
+            this.callbacks = {};
     }
     setSvg (svg) {
         this.svg = svg;
@@ -143,7 +149,8 @@ class Graph {
                .on('start', function () {
                })
                .on('end', function (d, i) {
-                   ACTIONS.saveDatamodelNodePosition(d);
+                   if (self.callbacks.saveNodePosition)
+                       self.callbacks.saveNodePosition(d);
                }));
     }
     defEdgeMarker (svg) {

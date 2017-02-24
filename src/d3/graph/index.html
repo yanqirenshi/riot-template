@@ -50,6 +50,8 @@
         <script type="riot/tag" src="../../tags/message.tag"></script>
         <!-- menu -->
         <script type="riot/tag" src="../../tags/global-menu.tag"></script>
+        <!-- org -->
+        <script type="riot/tag" src="./network-graph.tag"></script>
 
         <!-- ------------ -->
         <!--  initialize  -->
@@ -59,10 +61,19 @@
         <!-- ------------ -->
         <!--  js          -->
         <!-- ------------ -->
-        <script src="./graph.js"></script>
+        <script src="./network-graph.js"></script>
+
+        <!-- ------------ -->
+        <!--  Data        -->
+        <!-- ------------ -->
+        <script src="network-graph-nodes.js"></script>
+        <script src="network-graph-edges.js"></script>
 
         <script>
-         initGeniusParty(new HomeReducer(), { data: [] });
+         initGeniusParty(new HomeReducer(), {
+             nodes: NetworkGraphNodes,
+             edges: NetworkGraphEdges
+         });
          riot.mount('app');
         </script>
     </body>
