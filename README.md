@@ -15,16 +15,16 @@
 
 ## Dependencies
 
-| Name                          | Version         |
-|-------------------------------|-----------------|
-| [bulma.io](https://bulma.io/) | v0.7.1          |
-| [D3.js](https://d3js.org/)    | Version 4.13.0. |
-| Font Awesome Free             | 5.0.7           |
-| immutable.min.js              |                 |
-| moment.js                     | 2.20.1          |
-| Riot                          | v3.9.5          |
-| route.min.js                  |                 |
-| vanilla.js                    |                 |
+| Name                                                         | Version         |
+|--------------------------------------------------------------|-----------------|
+| [bulma.io](https://bulma.io/)                                | v0.7.1          |
+| [D3.js](https://d3js.org/)                                   | Version 4.13.0. |
+| [Font Awesome Free](https://fontawesome.com/)                | 5.0.7           |
+| [immutable.min.js](https://facebook.github.io/immutable-js/) | v4.0.0-rc.9     |
+| [moment.js](https://momentjs.com/)                           | 2.20.1          |
+| [Riot.js](https://riot.js.org/)                              | v3.9.5          |
+| [riot/route](https://github.com/riot/route)                  | v3.1.3          |
+| vanilla.js                                                   |                 |
 
 ## Author
 
