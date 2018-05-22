@@ -2,48 +2,38 @@
 
 [riot](https://github.com/riot/riot) を使ってシングルページアプリケーションを構築するためのテンプレートです。
 
+## Usage
+
 置くだけて使えます。
 
-## 解決したい問題
+## Functions
 
-シンプルかつ速やかにWEBページを書きたいだけなんです。
+- Router によるページ切り替え
+- グローバルナビゲーション
+- WEB-API のコール
+- 簡単なReduxの利用
 
-「コンパイルはしません。」とか言っていましたが、多少心を入れ変えました。
+## Dependencies
 
-最低限度はしようか、という気になってきました。
+| Name                          | Version         |
+|-------------------------------|-----------------|
+| [bulma.io](https://bulma.io/) | v0.7.1          |
+| [D3.js](https://d3js.org/)    | Version 4.13.0. |
+| Font Awesome Free             | 5.0.7           |
+| immutable.min.js              |                 |
+| moment.js                     | 2.20.1          |
+| Riot                          | v3.9.5          |
+| route.min.js                  |                 |
+| vanilla.js                    |                 |
 
-# 使い方
+## Author
 
-## 実行
++ Satoshi Iwasaki (yanqirenshi@gmail.com)
 
-nginx.conf とかに追加するだけで動きます。
+## Copyright
 
-```js
-location /riot/ {
-    alias c:/your/deploy/path/;
-}
-```
+Copyright (c) 2018 Satoshi Iwasaki (yanqirenshi@gmail.com)
 
-# サイトマップ
+## License
 
-| url                                                       | 概要                                                      |
-|-----------------------------------------------------------|-----------------------------------------------------------|
-| [/](./doc/screen/root-with-user.md)  (with sign in)       | サインインしている時のルート                              |
-| [/](./doc/screen/root-without-user.md)  (without sign in) | サインインしていない時のルート                            |
-| [/sign/in](./doc/screen/sing-in.md)                       | サインインページ                                          |
-| [/sign/out](./doc/screen/sing-out.md)                     | サインアウトページ                                        |
-
-# Dependency
-
-| elements                                                               | description        |
-|------------------------------------------------------------------------|--------------------|
-| [redux](https://github.com/reactjs/redux)                              | Riot 本体          |
-| [bulma](http://bulma.io)                                               | CSS フレームワーク |
-| [ES2015 (ES6)](http://qiita.com/tuno-tky/items/74ca595a9232bcbcd727)   | ECMAScript         |
-
-# Todo
-
-- [ ] /sign/in
-- [ ] /sign/out
-- [ ] /sign/d3/jobnet
-- [ ] /sign/d3/guntt
+LGPL

@@ -1,10 +1,10 @@
-var _CONFIG = {
-    ajax: {
-        protocol: 'http',
+const _CONFIG = {
+    api : {
+        scheme: 'http',
         host: 'localhost',
-        port: '55555'
-    },
-    link: {
-        prefix: ''
+        port: '8080',
+        path: {
+            prefix: '/path/api/v1'
+        }
     }
 };

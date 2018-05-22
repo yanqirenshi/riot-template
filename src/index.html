@@ -1,64 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html style="overflow:hidden;">
     <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Riot Template Home</title>
         <meta charset="utf-8">
-        <meta name="description" content="">
-        <meta name="author" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-        <!--&#91;if lt IE 9&#93;>
-             <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
-             <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-             <!&#91;endif&#93;-->
-        <link rel="shortcut icon" href="">
+        <title>RIOT-TEMPLATE</title>
 
-        <link rel="stylesheet" href="./lib/bulma.css">
-        <link rel="stylesheet" href="./lib/font-awesome-4.7.0/css/font-awesome.min.css">
-
-        <link rel="stylesheet" href="./css/common.css">
-
-        <script src="./lib/d3.v4.min.js"></script>
-        <script src="./lib/riot+compiler.min.js"></script>
-        <script src="./lib/route.min.js"></script>
-
-        <script src="./lib/redux/actions.js"></script>
-        <script src="./lib/redux/store.js"></script>
-        <script src="./lib/redux/reducer.js"></script>
-
-        <script src="./js/Ajax.js"></script>
+        <link rel="stylesheet" href="./libs/bulma.min.css">
+        <script defer src="./libs/fontawesome/v5.0.7-all.js"></script>
 
         <script src="./config.js"></script>
+
+        <script src="./libs/d3.js"></script>
+        <script src="./libs/immutable.min.js"></script>
+        <script src="./libs/moment.js"></script>
+
+        <script src="./libs/riot.min.js"></script>
+        <script src="./libs/route.min.js"></script>
+
+        <script src="./libs/vanilla.js"></script>
     </head>
     <body>
+
+        <script src="./js/Actions.js"></script>
+        <script src="./js/Reducer.js"></script>
+        <script src="./js/Store.js"></script>
+
+        <script src="./js/tags.js"></script>
+
+        <script src="./js/routing.js"></script>
+        <script src="index.js"></script>
+
         <app></app>
 
-        <script type="riot/tag" src="./app.tag"></script>
-
-        <!-- -------- -->
-        <!--  Redux   -->
-        <!-- -------- -->
-        <script src="./redux/actions.js"></script>
-        <script src="./reducer.js"></script>
-
-        <!-- -------- -->
-        <!--  Tags    -->
-        <!-- -------- -->
-        <!-- Messenger -->
-        <script type="riot/tag" src="./tags/message-area.tag"></script>
-        <script type="riot/tag" src="./tags/message.tag"></script>
-        <!-- menu -->
-        <script type="riot/tag" src="./tags/global-menu.tag"></script>
-
-        <!-- ------------ -->
-        <!--  initialize  -->
-        <!-- ------------ -->
-        <script src="./js/initApp.js"></script>
-
-        <script>
-         initGeniusParty(new HomeReducer(), { data: [] });
-         riot.mount('app');
-        </script>
+        <script>riot.mount('app');</script>
     </body>
 </html>
