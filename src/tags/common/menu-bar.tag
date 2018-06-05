@@ -28,7 +28,8 @@
      menu-bar .move-page-menu.hide {
          display: none;
      }
-     menu-bar > aside.menu {
+     menu-bar > .menu {
+         z-index: 666666; 
          height: 100vh;
          width: 55px;
          padding: 11px 0px 11px 11px;
