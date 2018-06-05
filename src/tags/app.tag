@@ -20,7 +20,7 @@
          overflow: hidden;
          display: block;
      }
-     app > .page.hide { display: none; }
+     .hide { display: none; }
     </style>
 
     <script>
@@ -44,6 +44,9 @@
          let page_tags = this.findPageTags(this.tags);
          let pages = STORE.state().get('pages');
 
+         let trg_hide = [];
+         let trg_show = [];
+
          for (var page_code in pages) {
              let page = pages[page_code];
              let page_tag = page_tags[page_code];
@@ -51,16 +54,36 @@
              // このロジックより、一度全部判定してから、削除&隠す⇒表示 が良いのではないか。
              if (page_tag) {
                  if (page.active) {
-                     ;
+                     trg_show.push(page_tag);
                  } else {
-                     ;
+                     trg_hide.push(page_tag)
                  }
              } else {
                  if (page.active) {
-                     ;
+                     trg_show.push(page_tag);
                  } else {
                      ; // なにもしない
                  }
+             }
+         }
+
+         for (var i in trg_hide) {
+             let tag = trg_hide[i].root;
+             let classes = tag.getAttribute('class').split(' ');
+             let hide = classes.filter((d)=>{ return d=='hide'; });
+             if (hide.length==0) {
+                 classes.push('hide');
+                 tag.setAttribute('class', classes.join(' '));
+             }
+         }
+         for (var i in trg_show) {
+             let tag = trg_show[i].root;
+             let classes = tag.getAttribute('class').split(' ');
+             let hide = classes.filter((d)=>{ return d=='hide'; });
+             if (hide.length>0) {
+                 tag.setAttribute('class', classes.filter((d)=>{
+                     return d!='hide';
+                 }));
              }
          }
      })
