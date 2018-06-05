@@ -13,6 +13,8 @@
         <page08 class="page"></page08>
     </div>
 
+    <section-footer>
+
     <style>
      app > .page {
          width: 100vw;
@@ -24,7 +26,6 @@
     </style>
 
     <script>
-
      STORE.subscribe((action)=>{
          if (action.type!='MOVE-PAGE')
              return;
