@@ -14,6 +14,8 @@ riot.tag2('app', '<menu-bar pages="{STORE.state().get(\'pages\')}" moves="{[]}">
          if (action.type!='MOVE-PAGE')
              return;
 
+         this.tags['menu-bar'].update();
+
          let page_tags = this.findPageTags(this.tags);
          let pages = STORE.state().get('pages');
 
