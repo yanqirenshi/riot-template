@@ -27,7 +27,7 @@ riot.tag2('section-container', '<section class="section"> <div class="container"
 riot.tag2('section-contents', '<section class="section"> <div class="container"> <h1 class="title is-{opts.no ? opts.no : 3}"> {opts.title} </h1> <h2 class="subtitle">{opts.subtitle}</h2> <div class="contents"> <yield></yield> </div> </div> </section>', 'section-contents > section.section { padding: 0.0rem 1.5rem 2.0rem 1.5rem; }', '', function(opts) {
 });
 
-riot.tag2('section-header', '<section class="section"> <div class="container"> <h1 class="title is-{opts.no ? opts.no : 3}"> {opts.title} </h1> <h2 class="subtitle">{opts.subtitle}</h2> <yield></yield> </div> </section>', '', '', function(opts) {
+riot.tag2('section-header', '<section class="section"> <div class="container"> <h1 class="title is-{opts.no ? opts.no : 3}"> {opts.title} </h1> <h2 class="subtitle">{opts.subtitle}</h2> <yield></yield> </div> </section>', 'section-header > .section { padding-top: 13px; padding-bottom: 13px; height: 66px; background: #fef4f4 ; }', '', function(opts) {
 });
 
 riot.tag2('page01', '<section-header title="Page01"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {
@@ -48,7 +48,7 @@ riot.tag2('page05', '<section-header title="Page05"></section-header> <section-c
 riot.tag2('page06', '<section-header title="Page06"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {
 });
 
-riot.tag2('page07', '<section-header title="page07"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {
+riot.tag2('page07', '<section-header title="Page07"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {
 });
 
 riot.tag2('page08', '<section-header title="Page08"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {

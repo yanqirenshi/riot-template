@@ -9,4 +9,13 @@
             <yield/>
         </div>
     </section>
+
+    <style>
+     section-header > .section {
+         padding-top: 13px;
+         padding-bottom: 13px;
+         height: 66px;
+         background: #fef4f4	;
+     }
+    </style>
 </section-header>
