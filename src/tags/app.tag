@@ -20,6 +20,7 @@
          overflow: hidden;
          display: block;
      }
+     app > .page.hide { display: none; }
     </style>
 
     <script>
@@ -33,8 +34,6 @@
          }
          return page_tags;
      }
-
-     /* this.on('update', ()=>{});*/
 
      STORE.subscribe((action)=>{
          if (action.type!='MOVE-PAGE')
@@ -64,12 +63,11 @@
          }
      })
 
-     this.on('mount', ()=>{
-         Metronome.start();
-     });
-
      window.addEventListener('resize', (event) => {
          this.update();
      });
+
+     if (location.hash=='')
+         location.hash='#page01'
     </script>
 </app>
