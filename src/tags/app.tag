@@ -1,5 +1,5 @@
 <app>
-    <menu-bar site={site()} moves={[]}></menu-bar>
+    <menu-bar brand={{label:'RT'}} site={site()} moves={[]}></menu-bar>
 
     <div ref="page-area"></div>
 

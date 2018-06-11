@@ -3,7 +3,7 @@
         <p ref="brand"
            class="menu-label"
            onclick={clickBrand}>
-            RB
+            {opts.brand.label}
         </p>
         <ul class="menu-list">
             <li each={opts.site.pages}>
