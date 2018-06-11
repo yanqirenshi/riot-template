@@ -18,21 +18,30 @@ class Store extends Vanilla_Redux_Store {
                             { code: 'sec1', tag: 'page01-sec1',     title: 'Section: sec1', description: '' },
                             { code: 'sec2', tag: 'page01-sec2',     title: 'Section: sec2', description: '' },
                             { code: 'sec3', tag: 'page01-sec3',     title: 'Section: sec3', description: '' },
-                        ]
+                        ],
+                        stye: {
+                            color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
+                        }
                     },
                     {
                         code: "page02",
                         title: "P2",
                         active_section: 'root',
                         home_section: 'root',
-                        sections: [{ code: 'root', tag: 'page02-sec_root', title: 'Home', description: '' }]
+                        sections: [{ code: 'root', tag: 'page02-sec_root', title: 'Home', description: '' }],
+                        stye: {
+                            color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
+                        }
                     },
                     {
                         code: "page03",
                         title: "P3",
                         active_section: 'root',
                         home_section: 'root',
-                        sections: [{ code: 'root', tag: 'page03-sec_root', title: 'Home', description: '' }]
+                        sections: [{ code: 'root', tag: 'page03-sec_root', title: 'Home', description: '' }],
+                        stye: {
+                            color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
+                        }
                     }
                 ]
             }
