@@ -1,19 +1,7 @@
 <app>
-    <menu-bar pages={STORE.state().get('pages')}
-              moves={[]}></menu-bar>
+    <menu-bar pages={pages()} moves={[]}></menu-bar>
 
-    <div id="page-area">
-        <page01 class="page"></page01>
-        <page02 class="page"></page02>
-        <page03 class="page"></page03>
-        <page04 class="page"></page04>
-        <page05 class="page"></page05>
-        <page06 class="page"></page06>
-        <page07 class="page"></page07>
-        <page08 class="page"></page08>
-    </div>
-
-    <section-footer>
+    <div ref="page-area"></div>
 
     <style>
      app > .page {
@@ -26,6 +14,14 @@
     </style>
 
     <script>
+     this.pages = () => {
+         return STORE.state().get('pages');
+     };
+
+     this.on('mount', () => {
+         ROUTER.mountPages(this, this.refs['page-area'], this.pages());
+     });
+
      STORE.subscribe((action)=>{
          if (action.type!='MOVE-PAGE')
              return;
@@ -33,7 +29,7 @@
          let tags= this.tags;
 
          tags['menu-bar'].update();
-         ROUTER.switchPage(tags);
+         ROUTER.switchPage2(this, this.pages(), this.refs['page-area']);
      })
 
      window.addEventListener('resize', (event) => {
