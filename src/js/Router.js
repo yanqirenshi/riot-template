@@ -16,13 +16,23 @@ class Router {
         let page_code = args[0];
         let section_code = args.length==2 ? args[1] : 'root';
 
+        // TODO: 応急処置
+        let x = STORE.state().get('pages')[page_code].section;
+        let y = {
+            page02: 'root',
+            page03: 'dashboard_root'
+        };
+        if (section_code=='root')
+            section_code = y[page_code];
+        // END: 応急処置
+
         let new_pages = store.state().get('pages');
         let active_page = null;
 
         for (var k in new_pages) {
             new_pages[k].active = (page_code==k);
             if (page_code==k)
-                new_pages[k].sections = section_code;
+                new_pages[k].section = section_code;
         }
 
         store.dispatch(actions.movePage({
@@ -38,6 +48,9 @@ class Router {
             return hash.substring(1);
         }());
     }
+    /* **************************************************************** *
+     * page
+     * **************************************************************** */
     findPageTags (tags) {
         let page_tags = {};
         for (var k in tags) {
@@ -63,12 +76,14 @@ class Router {
             if (page_tag) {
                 if (page.active) {
                     trg_show.push(page_tag);
+                    page_tag.update();
                 } else {
                     trg_hide.push(page_tag);
                 }
             } else {
                 if (page.active) {
                     trg_show.push(page_tag);
+                    page_tag.update();
                 } else {
                     ; // なにもしない
                 }
@@ -95,4 +110,127 @@ class Router {
             }
         }
     }
+    /* **************************************************************** *
+     * section
+     * **************************************************************** */
+    journalize (page_code, tag_prefix, _active_section_code, sections) {
+        let out = { hide: [], show: [] };
+        let active_section_code = (tag_prefix + '-' + _active_section_code).toUpperCase();
+
+        for (var i in sections) {
+            let section = sections[i];
+            if (active_section_code==section.root.tagName)
+                out.show.push(section);
+            else
+                out.hide.push(section);
+        }
+
+        return out;
+    };
+    switchSection (page_code, tag_prefix, tags) {
+        let sections = [];
+        let active_section_code = this._store.state().get('pages')[page_code].section;
+
+        for (var i in tags)
+            if (this.isHaveClass('page-section', tags[i].opts.class))
+                sections.push(tags[i]);
+
+        let data = this.journalize(page_code, tag_prefix, active_section_code, sections);
+
+        for (var i in data.hide) {
+            let trg = data.hide[i];
+            let cls = trg.root.getAttribute('class');
+            trg.root.setAttribute('class', this.addClass('hide', cls));
+        }
+
+        for (var i in data.show) {
+            let trg = data.show[i];
+
+            trg.update();
+
+            let cls = trg.root.getAttribute('class');
+            trg.root.setAttribute('class', this.rmClass('hide', cls));
+        }
+    };
+    switchSection2 (page_code, tags, sections_data) {
+        let sections = [];
+        let active_section_code = this._store.state().get('pages')[page_code].section;
+
+        let trgs = { hide: [], show: [] };
+        for (var i in sections_data) {
+            let section_data = sections_data[i];
+            let tag = tags[section_data.code];
+            if (!tag) continue;
+
+            if (section_data.code==active_section_code)
+                trgs.show.push(tag);
+            else
+                trgs.hide.push(tag);
+        }
+
+        for (var i in trgs.hide) {
+            let trg = trgs.hide[i];
+            let elem = trg.root;
+            if (!elem.classList.contains('hide'))
+                elem.classList.add("hide");
+        }
+
+        for (var i in trgs.show) {
+            let trg = trgs.show[i];
+            let elem = trg.root;
+            if (elem.classList.contains('hide'))
+                elem.classList.remove("hide");
+
+            trg.update();
+        }
+    };
+    mountSections (page, active_section_code, sections) {
+        let root = page.root;
+
+        for (var i in sections) {
+            let section = sections[i];
+            let tag_name = 'func-' + section.code;
+
+            var elem = document.createElement(tag_name);
+
+            if (section.code==active_section_code)
+                elem.classList.add('page-section');
+            else
+                elem.classList.add('page-section', 'hide');
+
+            root.appendChild(elem);
+
+            let opts = {};
+            if (section.code=='root')
+                opts.sections = sections;
+
+            let new_tags = riot.mount(tag_name, opts);
+
+            page.tags[tag_name] = new_tags[0];
+        }
+    }
+    /* **************************************************************** *
+     * util
+     * **************************************************************** */
+    isHaveClass (class_trg, class_string) {
+        if (!class_string) return false;
+
+        let classes = class_string.trim().split(' ');
+        let results = classes.find((cls) => { return cls==class_trg; });
+
+        return !(results.length==0);
+    };
+    rmClass (class_trg, class_string) {
+        let classes = class_string.trim().split(' ');
+        let results = classes.filter((cls) => { return cls!=class_trg; });
+
+        return results.join(' ');
+    };
+    addClass (class_trg, class_string) {
+        let classes = class_string.trim().split(' ');
+        if (classes.filter((cls) => { return cls==class_trg; }).length==0)
+            classes.push(class_trg);
+
+        return classes.join(' ');
+    };
 }

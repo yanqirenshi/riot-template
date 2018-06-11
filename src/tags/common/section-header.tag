@@ -16,6 +16,7 @@
          padding-bottom: 13px;
          height: 66px;
          background: #fef4f4;
+         margin-bottom: 33px;
      }
     </style>
 </section-header>
