@@ -176,13 +176,13 @@ riot.tag2('page03', '', '', '', function(opts) {
      this.on('update', () => { this.draw(); });
 });
 
-riot.tag2('page01-sec1', '<section-header title="Page01 Sec 1"></section-header> <section-breadcrumb></section-breadcrumb>', '', '', function(opts) {
+riot.tag2('page01-sec1', '<section-header-with-breadcrumb title="Page01 Sec 1"></section-header-with-breadcrumb>', '', '', function(opts) {
 });
 
-riot.tag2('page01-sec2', '<section-header title="Page01 Sec 2"></section-header> <section-breadcrumb></section-breadcrumb>', '', '', function(opts) {
+riot.tag2('page01-sec2', '<section-header-with-breadcrumb title="Page01 Sec 2"></section-header-with-breadcrumb>', '', '', function(opts) {
 });
 
-riot.tag2('page01-sec3', '<section-header title="Page01 Sec 3"></section-header> <section-breadcrumb></section-breadcrumb>', '', '', function(opts) {
+riot.tag2('page01-sec3', '<section-header-with-breadcrumb title="Page01 Sec 3"></section-header-with-breadcrumb>', '', '', function(opts) {
 });
 
 riot.tag2('page01-sec_root', '<section-header title="Page01 Sec Root"></section-header> <section-container title="セクション" data="{sections()}"> <sections-list data="{opts.data}"> </sections-list> </section-container>', '', '', function(opts) {
