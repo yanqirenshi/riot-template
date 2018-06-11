@@ -1,5 +1,5 @@
 <app>
-    <menu-bar pages={pages()} moves={[]}></menu-bar>
+    <menu-bar site={site()} moves={[]}></menu-bar>
 
     <div ref="page-area"></div>
 
@@ -14,13 +14,9 @@
     </style>
 
     <script>
-     this.pages = () => {
-         return STORE.state().get('pages');
+     this.site = () => {
+         return STORE.state().get('site');
      };
-
-     this.on('mount', () => {
-         ROUTER.mountPages(this, this.refs['page-area'], this.pages());
-     });
 
      STORE.subscribe((action)=>{
          if (action.type!='MOVE-PAGE')
@@ -29,7 +25,7 @@
          let tags= this.tags;
 
          tags['menu-bar'].update();
-         ROUTER.switchPage2(this, this.pages(), this.refs['page-area']);
+         ROUTER.switchPage(this, this.refs['page-area'], this.site());
      })
 
      window.addEventListener('resize', (event) => {

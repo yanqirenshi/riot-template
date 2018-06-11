@@ -1,11 +1,7 @@
-riot.tag2('app', '<menu-bar pages="{pages()}" moves="{[]}"></menu-bar> <div ref="page-area"></div>', 'app > .page { width: 100vw; height: 100vh; overflow: hidden; display: block; } app .hide,[data-is="app"] .hide{ display: none; }', '', function(opts) {
-     this.pages = () => {
-         return STORE.state().get('pages');
+riot.tag2('app', '<menu-bar site="{site()}" moves="{[]}"></menu-bar> <div ref="page-area"></div>', 'app > .page { width: 100vw; height: 100vh; overflow: hidden; display: block; } app .hide,[data-is="app"] .hide{ display: none; }', '', function(opts) {
+     this.site = () => {
+         return STORE.state().get('site');
      };
-
-     this.on('mount', () => {
-         ROUTER.mountPages(this, this.refs['page-area'], this.pages());
-     });
 
      STORE.subscribe((action)=>{
          if (action.type!='MOVE-PAGE')
@@ -14,7 +10,7 @@ riot.tag2('app', '<menu-bar pages="{pages()}" moves="{[]}"></menu-bar> <div ref=
          let tags= this.tags;
 
          tags['menu-bar'].update();
-         ROUTER.switchPage2(this, this.pages(), this.refs['page-area']);
+         ROUTER.switchPage(this, this.refs['page-area'], this.site());
      })
 
      window.addEventListener('resize', (event) => {
@@ -25,7 +21,7 @@ riot.tag2('app', '<menu-bar pages="{pages()}" moves="{[]}"></menu-bar> <div ref=
          location.hash='#page01'
 });
 
-riot.tag2('menu-bar', '<aside class="menu"> <p ref="brand" class="menu-label" onclick="{clickBrand}"> RB </p> <ul class="menu-list"> <li each="{page, key in opts.pages}"> <a class="{page.active ? \'is-active\' : \'\'}" href="{\'#\' + key}"> {page.label} </a> </li> </ul> </aside> <div class="move-page-menu hide" ref="move-panel"> <p each="{moves()}"> <a href="{href}">{label}</a> </p> </div>', 'menu-bar .move-page-menu { z-index: 666665; background: #fdeff2; position: fixed; left: 55px; top: 0px; min-width: 111px; height: 100vh; box-shadow: 2px 0px 8px 0px #e0e0e0; padding: 22px 55px 22px 22px; } menu-bar .move-page-menu.hide { display: none; } menu-bar .move-page-menu > p { margin-bottom: 11px; } menu-bar > .menu { z-index: 666666; height: 100vh; width: 55px; padding: 11px 0px 11px 11px; position: fixed; left: 0px; top: 0px; background: #e198b4; } menu-bar .menu-label, menu-bar .menu-list a { padding: 0; width: 33px; height: 33px; text-align: center; margin-top: 8px; border-radius: 3px; background: none; color: #ffffff; font-weight: bold; padding-top: 7px; font-size: 14px; } menu-bar .menu-label,[data-is="menu-bar"] .menu-label{ background: #fdeff2; color: #e198b4; } menu-bar .menu-label.open,[data-is="menu-bar"] .menu-label.open{ background: #fdeff2; color: #e198b4; width: 44px; border-radius: 3px 0px 0px 3px; text-shadow: 0px 0px 1px #eee; padding-right: 11px; } menu-bar .menu-list a.is-active { width: 44px; padding-right: 11px; border-radius: 3px 0px 0px 3px; background: #ffffff; color: #333333; }', '', function(opts) {
+riot.tag2('menu-bar', '<aside class="menu"> <p ref="brand" class="menu-label" onclick="{clickBrand}"> RB </p> <ul class="menu-list"> <li each="{opts.site.pages}"> <a class="{opts.site.active_page==code ? \'is-active\' : \'\'}" href="{\'#\' + code}"> {title} </a> </li> </ul> </aside> <div class="move-page-menu hide" ref="move-panel"> <p each="{moves()}"> <a href="{href}">{label}</a> </p> </div>', 'menu-bar .move-page-menu { z-index: 666665; background: #fdeff2; position: fixed; left: 55px; top: 0px; min-width: 111px; height: 100vh; box-shadow: 2px 0px 8px 0px #e0e0e0; padding: 22px 55px 22px 22px; } menu-bar .move-page-menu.hide { display: none; } menu-bar .move-page-menu > p { margin-bottom: 11px; } menu-bar > .menu { z-index: 666666; height: 100vh; width: 55px; padding: 11px 0px 11px 11px; position: fixed; left: 0px; top: 0px; background: #e198b4; } menu-bar .menu-label, menu-bar .menu-list a { padding: 0; width: 33px; height: 33px; text-align: center; margin-top: 8px; border-radius: 3px; background: none; color: #ffffff; font-weight: bold; padding-top: 7px; font-size: 14px; } menu-bar .menu-label,[data-is="menu-bar"] .menu-label{ background: #fdeff2; color: #e198b4; } menu-bar .menu-label.open,[data-is="menu-bar"] .menu-label.open{ background: #fdeff2; color: #e198b4; width: 44px; border-radius: 3px 0px 0px 3px; text-shadow: 0px 0px 1px #eee; padding-right: 11px; } menu-bar .menu-list a.is-active { width: 44px; padding-right: 11px; border-radius: 3px 0px 0px 3px; background: #ffffff; color: #333333; }', '', function(opts) {
      this.moves = () => {
          let moves = [
              { code: 'RBP',    href: '/rb/rbp/',    label: 'RBP: RUN PASSPORT' },
@@ -132,26 +128,86 @@ riot.tag2('section-list', '<table class="table is-bordered is-striped is-narrow 
      };
 });
 
-riot.tag2('page01', '<section-header title="Page01"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {
+riot.tag2('sections-list', '<table class="table"> <tbody> <tr each="{opts.data}"> <td><a href="{hash}">{title}</a></td> </tr> </tbody> </table>', '', '', function(opts) {
 });
 
-riot.tag2('page02', '<section-header title="Page02"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {
+riot.tag2('page01', '', '', '', function(opts) {
+     this.page_code = this.root.tagName.toLowerCase();
+
+     this.draw = () => {
+         let page_state = STORE.state().get('site').pages.find((d) => { return d.code==this.page_code});
+
+         ROUTER.switchSection(this,
+                              page_state.active_section,
+                              page_state.sections);
+     }
+
+     this.on('mount', () => { this.draw(); });
+     this.on('update', () => { this.draw(); });
 });
 
-riot.tag2('page03', '<section-header title="Page03"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {
+riot.tag2('page02', '', '', '', function(opts) {
+     this.page_code = this.root.tagName.toLowerCase();
+
+     this.draw = () => {
+         let page_state = STORE.state().get('site').pages.find((d) => { return d.code==this.page_code});
+
+         ROUTER.switchSection(this,
+                              page_state.active_section,
+                              page_state.sections);
+     }
+
+     this.on('mount', () => { this.draw(); });
+     this.on('update', () => { this.draw(); });
 });
 
-riot.tag2('page04', '<section-header title="Page04"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {
+riot.tag2('page03', '', '', '', function(opts) {
+     this.page_code = this.root.tagName.toLowerCase();
+
+     this.draw = () => {
+         let page_state = STORE.state().get('site').pages.find((d) => { return d.code==this.page_code});
+
+         ROUTER.switchSection(this,
+                              page_state.active_section,
+                              page_state.sections);
+     }
+
+     this.on('mount', () => { this.draw(); });
+     this.on('update', () => { this.draw(); });
 });
 
-riot.tag2('page05', '<section-header title="Page05"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {
+riot.tag2('page01-sec1', '<section-header title="Page01 Sec 1"></section-header> <section-breadcrumb></section-breadcrumb>', '', '', function(opts) {
 });
 
-riot.tag2('page06', '<section-header title="Page06"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {
+riot.tag2('page01-sec2', '<section-header title="Page01 Sec 2"></section-header> <section-breadcrumb></section-breadcrumb>', '', '', function(opts) {
 });
 
-riot.tag2('page07', '<section-header title="Page07"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {
+riot.tag2('page01-sec3', '<section-header title="Page01 Sec 3"></section-header> <section-breadcrumb></section-breadcrumb>', '', '', function(opts) {
 });
 
-riot.tag2('page08', '<section-header title="Page08"></section-header> <section-container title="概要"></section-container>', '', '', function(opts) {
+riot.tag2('page01-sec_root', '<section-header title="Page01 Sec Root"></section-header> <section-container title="セクション" data="{sections()}"> <sections-list data="{opts.data}"> </sections-list> </section-container>', '', '', function(opts) {
+     this.sections = () => {
+         let pages = STORE.state().get('site').pages;
+         let page = pages.find((d) => { return d.code=='page01'; });
+
+         return page.sections;
+     }
+});
+
+riot.tag2('page02-sec_root', '<section-header title="Page02 Sec Root"></section-header>', '', '', function(opts) {
+     this.sections = () => {
+         let pages = STORE.state().get('site').pages;
+         let page = pages.find((d) => { return d.code=='page02'; });
+
+         return page.sections;
+     }
+});
+
+riot.tag2('page03-sec_root', '<section-header title="Page03 Sec Root"></section-header>', '', '', function(opts) {
+     this.sections = () => {
+         let pages = STORE.state().get('site').pages;
+         let page = pages.find((d) => { return d.code=='page03'; });
+
+         return page.sections;
+     }
 });
