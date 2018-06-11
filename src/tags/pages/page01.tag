@@ -1,5 +1,16 @@
 <page01>
-    <section-header title="Page01"></section-header>
+    <script>
+     this.page_code = this.root.tagName.toLowerCase();
 
-    <section-container title="概要"></section-container>
+     this.draw = () => {
+         let page_state = STORE.state().get('site').pages.find((d) => { return d.code==this.page_code});
+
+         ROUTER.switchSection(this,
+                              page_state.active_section,
+                              page_state.sections);
+     }
+
+     this.on('mount', () => { this.draw(); });
+     this.on('update', () => { this.draw(); });
+    </script>
 </page01>

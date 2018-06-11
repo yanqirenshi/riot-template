@@ -6,10 +6,10 @@
             RB
         </p>
         <ul class="menu-list">
-            <li each={page, key in opts.pages}>
-                <a class="{page.active ? 'is-active' : ''}"
-                   href={'#' + key}>
-                    {page.label}
+            <li each={opts.site.pages}>
+                <a class="{opts.site.active_page==code ? 'is-active' : ''}"
+                   href={'#' + code}>
+                    {title}
                 </a>
             </li>
         </ul>

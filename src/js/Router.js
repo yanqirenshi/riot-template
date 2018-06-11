@@ -12,31 +12,19 @@ class Router {
         let store = this._store;
         let actions = this._actions;
 
+        let site = store.state().get('site');
+
         let len = args.length;
-        let page_code = args[0];
-        let section_code = args.length==2 ? args[1] : 'root';
+        let page_code = args[0] ? args[0] : site.home_page;
 
-        // TODO: 応急処置
-        let x = STORE.state().get('pages')[page_code].section;
-        let y = {
-            page02: 'root',
-            page03: 'dashboard_root'
-        };
-        if (section_code=='root')
-            section_code = y[page_code];
-        // END: 応急処置
+        site.active_page = page_code;
 
-        let new_pages = store.state().get('pages');
-        let active_page = null;
+        let page = site.pages.find((d) => { return d.code == page_code; });
 
-        for (var k in new_pages) {
-            new_pages[k].active = (page_code==k);
-            if (page_code==k)
-                new_pages[k].section = section_code;
-        }
+        page.active_section = args.length==2 ? args[1] : page.home_section;
 
         store.dispatch(actions.movePage({
-            pages: new_pages
+            site: site
         }));
     }
     start () {
@@ -51,23 +39,6 @@ class Router {
     /* **************************************************************** *
      * page
      * **************************************************************** */
-    mountPages(root_tag, page_holder_elem, pages) {
-        for (var tag_name in pages) {
-            let page = pages[tag_name];
-
-            if (page.active) {
-                var elem = document.createElement(tag_name);
-
-                elem.classList.add('page');
-
-                page_holder_elem.appendChild(elem);
-
-                let new_page_tag = riot.mount(tag_name);
-
-                root_tag.tags[tag_name] = new_page_tag[0];
-            }
-        };
-    }
     findPageTags (tags) {
         let page_tags = {};
         for (var k in tags) {
@@ -78,19 +49,29 @@ class Router {
         }
         return page_tags;
     }
-    switchPage2 (root_tag, pages, page_holder_elem) {
+    switchPage (root_tag, page_holder_elem, site) {
         let tags = root_tag.tags;
         let trg_show = [];
 
-        for (var key in pages) {
-            let page = pages[key];
+        for (var i in site.pages) {
+            let page = site.pages[i];
+            let key = page.code;
             let tag = tags[key];
-            if (page.active && !tag) {
-                trg_show.push(key);
-            } else if (page.active && tag && !tag.isMounted) {
-                trg_show.push(key);
-            } else if (!page.active && tag && tag.isMounted) {
-                tag.unmount();
+
+
+            if (site.active_page==key) {
+                if (!tag) {
+                    trg_show.push(key);
+                }
+                if (tag && !tag.isMounted) {
+                    trg_show.push(key);
+                }
+                if (tag && tag.isMounted) {
+                    tag.update();
+                }
+            } else {
+                if (tag && tag.isMounted)
+                    tag.unmount();
             }
         }
 
@@ -105,55 +86,6 @@ class Router {
 
             let new_page_tag = riot.mount(tag_name);
             root_tag.tags[tag_name] = new_page_tag[0];
-        }
-    }
-    switchPage (tags) {
-        let store = this._store;
-        let pages = store.state().get('pages');
-        let page_tags = this.findPageTags(tags);
-        let trg_hide = [];
-        let trg_show = [];
-
-        for (var page_code in pages) {
-            let page = pages[page_code];
-            let page_tag = page_tags[page_code];
-
-            // このロジックより、一度全部判定してから、削除&隠す⇒表示 が良いのではないか。
-            if (page_tag) {
-                if (page.active) {
-                    trg_show.push(page_tag);
-                    page_tag.update();
-                } else {
-                    trg_hide.push(page_tag);
-                }
-            } else {
-                if (page.active) {
-                    trg_show.push(page_tag);
-                    page_tag.update();
-                } else {
-                    ; // なにもしない
-                }
-            }
-        }
-
-        for (var i in trg_hide) {
-            let tag = trg_hide[i].root;
-            let classes = tag.getAttribute('class').split(' ');
-            let hide = classes.filter((d)=>{ return d=='hide'; });
-            if (hide.length==0) {
-                classes.push('hide');
-                tag.setAttribute('class', classes.join(' '));
-            }
-        }
-        for (var i in trg_show) {
-            let tag = trg_show[i].root;
-            let classes = tag.getAttribute('class').split(' ');
-            let hide = classes.filter((d)=>{ return d=='hide'; });
-            if (hide.length>0) {
-                tag.setAttribute('class', classes.filter((d)=>{
-                    return d!='hide';
-                }));
-            }
         }
     }
     /* **************************************************************** *
@@ -184,50 +116,44 @@ class Router {
             page.tags[tag_name] = new_tags[0];
         }
     }
-    journalize (page_code, tag_prefix, _active_section_code, sections) {
-        let out = { hide: [], show: [] };
-        let active_section_code = (tag_prefix + '-' + _active_section_code).toUpperCase();
+    switchSection (root_tag, active_section_code, sections_data) {
+        let tags = root_tag.tags;
+        let trg_show = [];
 
-        for (var i in sections) {
-            let section = sections[i];
-            if (active_section_code==section.root.tagName)
-                out.show.push(section);
-            else
-                out.hide.push(section);
-        }
-
-        return out;
-    };
-    switchSection (page_code, tags, sections_data) {
-        let sections = [];
-        let active_section_code = this._store.state().get('pages')[page_code].section;
-
-        let trgs = { hide: [], show: [] };
         for (var i in sections_data) {
-            let section_data = sections_data[i];
-            let tag = tags[section_data.code];
-            if (!tag) continue;
+            let section = sections_data[i];
+            let section_code = section.code;
+            let tag = tags[section.tag];
 
-            if (section_data.code==active_section_code)
-                trgs.show.push(tag);
-            else
-                trgs.hide.push(tag);
+            if (active_section_code==section_code) {
+                if (!tag) {
+                    trg_show.push(section_code);
+                }
+                if (tag && !tag.isMounted) {
+                    trg_show.push(section_code);
+                }
+                if (tag && tag.isMounted) {
+                    tag.update();
+                }
+            } else {
+                if (tag && tag.isMounted)
+                    tag.unmount();
+            }
         }
 
-        for (var i in trgs.hide) {
-            let trg = trgs.hide[i];
-            let elem = trg.root;
-            if (!elem.classList.contains('hide'))
-                elem.classList.add("hide");
-        }
+        for (var i in trg_show) {
+            let tag_code = trg_show[i];
+            let section_data = sections_data.find((d) => { return d.code==tag_code; });
+            let tag_name = section_data.tag;
 
-        for (var i in trgs.show) {
-            let trg = trgs.show[i];
-            let elem = trg.root;
-            if (elem.classList.contains('hide'))
-                elem.classList.remove("hide");
+            var elem = document.createElement(tag_name);
 
-            trg.update();
+            elem.classList.add('page');
+
+            root_tag.root.appendChild(elem);
+
+            let new_page_tag = riot.mount(tag_name);
+            root_tag.tags[tag_name] = new_page_tag[0];
         }
     };
     /* **************************************************************** *
