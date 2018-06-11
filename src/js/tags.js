@@ -132,45 +132,21 @@ riot.tag2('sections-list', '<table class="table"> <tbody> <tr each="{opts.data}"
 });
 
 riot.tag2('page01', '', '', '', function(opts) {
-     this.page_code = this.root.tagName.toLowerCase();
-
-     this.draw = () => {
-         let page_state = STORE.state().get('site').pages.find((d) => { return d.code==this.page_code});
-
-         ROUTER.switchSection(this,
-                              page_state.active_section,
-                              page_state.sections);
-     }
+     this.mixin(MIXINS.page);
 
      this.on('mount', () => { this.draw(); });
      this.on('update', () => { this.draw(); });
 });
 
 riot.tag2('page02', '', '', '', function(opts) {
-     this.page_code = this.root.tagName.toLowerCase();
-
-     this.draw = () => {
-         let page_state = STORE.state().get('site').pages.find((d) => { return d.code==this.page_code});
-
-         ROUTER.switchSection(this,
-                              page_state.active_section,
-                              page_state.sections);
-     }
+     this.mixin(MIXINS.page);
 
      this.on('mount', () => { this.draw(); });
      this.on('update', () => { this.draw(); });
 });
 
 riot.tag2('page03', '', '', '', function(opts) {
-     this.page_code = this.root.tagName.toLowerCase();
-
-     this.draw = () => {
-         let page_state = STORE.state().get('site').pages.find((d) => { return d.code==this.page_code});
-
-         ROUTER.switchSection(this,
-                              page_state.active_section,
-                              page_state.sections);
-     }
+     this.mixin(MIXINS.page);
 
      this.on('mount', () => { this.draw(); });
      this.on('update', () => { this.draw(); });
@@ -195,19 +171,7 @@ riot.tag2('page01-sec_root', '<section-header title="Page01 Sec Root"></section-
 });
 
 riot.tag2('page02-sec_root', '<section-header title="Page02 Sec Root"></section-header>', '', '', function(opts) {
-     this.sections = () => {
-         let pages = STORE.state().get('site').pages;
-         let page = pages.find((d) => { return d.code=='page02'; });
-
-         return page.sections;
-     }
 });
 
 riot.tag2('page03-sec_root', '<section-header title="Page03 Sec Root"></section-header>', '', '', function(opts) {
-     this.sections = () => {
-         let pages = STORE.state().get('site').pages;
-         let page = pages.find((d) => { return d.code=='page03'; });
-
-         return page.sections;
-     }
 });
