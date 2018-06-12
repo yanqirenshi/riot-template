@@ -148,7 +148,7 @@ class Router {
 
             var elem = document.createElement(tag_name);
 
-            elem.classList.add('page');
+            elem.classList.add('page-section');
 
             root_tag.root.appendChild(elem);
 
