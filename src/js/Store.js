@@ -10,7 +10,8 @@ class Store extends Vanilla_Redux_Store {
                 pages: [
                     {
                         code: "page01",
-                        title: "P1",
+                        title: "Page: 01",
+                        menu_label: 'P1',
                         active_section: 'root',
                         home_section: 'root',
                         sections: [
@@ -25,7 +26,8 @@ class Store extends Vanilla_Redux_Store {
                     },
                     {
                         code: "page02",
-                        title: "P2",
+                        title: "Page: 02",
+                        menu_label: 'P2',
                         active_section: 'root',
                         home_section: 'root',
                         sections: [{ code: 'root', tag: 'page02-sec_root', title: 'Home', description: '' }],
@@ -35,7 +37,8 @@ class Store extends Vanilla_Redux_Store {
                     },
                     {
                         code: "page03",
-                        title: "P3",
+                        title: "Page: 03",
+                        menu_label: 'P3',
                         active_section: 'root',
                         home_section: 'root',
                         sections: [{ code: 'root', tag: 'page03-sec_root', title: 'Home', description: '' }],

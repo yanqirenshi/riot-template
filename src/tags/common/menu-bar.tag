@@ -9,7 +9,7 @@
             <li each={opts.site.pages}>
                 <a class="{opts.site.active_page==code ? 'is-active' : ''}"
                    href={'#' + code}>
-                    {title}
+                    {menu_label}
                 </a>
             </li>
         </ul>
