@@ -152,7 +152,7 @@ class Router {
 
             root_tag.root.appendChild(elem);
 
-            let new_page_tag = riot.mount(tag_name);
+            let new_page_tag = riot.mount(tag_name, { page_code: root_tag.pageCode() });
             root_tag.tags[tag_name] = new_page_tag[0];
         }
     };
