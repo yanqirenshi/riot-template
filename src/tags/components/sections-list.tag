@@ -2,7 +2,7 @@
     <table class="table">
         <tbody>
             <tr each={opts.data}>
-                <td><a href={hash}>{title}</a></td>
+                <td><a href={hash}>{name}</a></td>
             </tr>
         </tbody>
     </table>
