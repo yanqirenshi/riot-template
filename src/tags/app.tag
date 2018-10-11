@@ -33,6 +33,6 @@
      });
 
      if (location.hash=='')
-         location.hash='#page01'
+         location.hash=STORE.get('site.active_page');
     </script>
 </app>
