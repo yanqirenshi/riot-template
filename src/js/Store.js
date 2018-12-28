@@ -58,7 +58,8 @@ class Store extends Vanilla_Redux_Store {
 
         for (var i in data.site.pages) {
             let page = data.site.pages[i];
-            for (var k in page.sections) {
+
+            for (var k in page.children) {
                 let section = page.sections[k];
                 let hash = '#' + page.code;
 

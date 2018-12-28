@@ -236,8 +236,8 @@ class Router {
     }
     splitSection (tags, page) {
         let sections = page.children;
-
         let out = { show: [], unmount: [], update: [] };
+
         for (let section of sections) {
             let tag = tags[section.tag];
 
