@@ -56,19 +56,8 @@ class Store extends Vanilla_Redux_Store {
             }
         };
 
-        for (var i in data.site.pages) {
-            let page = data.site.pages[i];
-
-            for (var k in page.children) {
-                let section = page.sections[k];
-                let hash = '#' + page.code;
-
-                if (section.code!='root')
-                    hash += '/' + section.code;
-
-                section.hash = hash;
-            }
-        }
+        for (let page of data.site.pages)
+            this.setHashTo(page);
 
         this._contents = Immutable.Map(data);
         return this;

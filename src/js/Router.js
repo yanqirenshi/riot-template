@@ -94,6 +94,8 @@ class Router {
         let page_code = this.getPageCode(site, args);
         let page = this.getPage (site, page_code);
 
+        if (!page) throw new Error('Page が存在しません。 Page code=' + page_code);
+
         site.active_page = page_code;
         page.active_section = this.getActiveSection(page, args);
 
