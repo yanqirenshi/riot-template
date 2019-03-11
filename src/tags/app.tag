@@ -3,16 +3,6 @@
 
     <div ref="page-area"></div>
 
-    <style>
-     app > .page {
-         width: 100vw;
-         height: 100vh;
-         overflow: hidden;
-         display: block;
-     }
-     .hide { display: none; }
-    </style>
-
     <script>
      this.site = () => {
          return STORE.state().get('site');
@@ -24,7 +14,9 @@
 
          let tags= this.tags;
 
-         tags['menu-bar'].update();
+         if (tags['menu-bar'])
+             tags['menu-bar'].update();
+
          ROUTER.switchPage(this, this.refs['page-area'], this.site());
      })
 
