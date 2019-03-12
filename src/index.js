@@ -37,4 +37,11 @@ var Metronome = new Vanilla_metronome({
 /*  Router  */
 /* ****** */
 var ROUTER = new Router(STORE, ACTIONS);
+// var ROUTER = new Router(STORE, {
+//     changed: (site) => {
+//         ACTIONS.movePage({
+//             site: site
+//         });
+//     },
+// });
 ROUTER.start();
