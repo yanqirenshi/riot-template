@@ -32,8 +32,10 @@ class Router {
         this._actions = actions;
 
         let self = this;
+
+        // ルートが変更されたら発動する。
         route(function (a) {
-            self.routing(arguments);
+            self.routing(Array.prototype.slice.call(arguments));
         });
     }
     start () {
@@ -99,6 +101,8 @@ class Router {
         site.active_page = page_code;
         page.active_section = this.getActiveSection(page, args);
 
+        // Action 発動。。。。これは外部からのコールバック・インジェクションにしたほうが良いのでは？
+        // this.actions.changed(site);
         this._store.dispatch(actions.movePage({
             site: site
         }));
