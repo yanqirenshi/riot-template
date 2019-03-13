@@ -7,6 +7,7 @@ class Store extends Vanilla_Redux_Store {
             {
                 code: "home", menu_label: '家',
                 active_section: 'root', home_section: 'root',
+                tag: 'home_page_root',
                 children: [
                     { code: 'root', tag: 'home_page_root' },
                 ],
@@ -19,6 +20,7 @@ class Store extends Vanilla_Redux_Store {
                 menu_label: 'ペ1',
                 active_section: 'root',
                 home_section: 'root',
+                tag: 'page01_page_root',
                 children: [
                     { code: 'root', tag: 'page01_page_root', name: 'root' },
                     { code: 'sec1', tag: 'page01_page1',     name: 'page1' },
@@ -32,14 +34,18 @@ class Store extends Vanilla_Redux_Store {
             {
                 code: "page02", menu_label: 'ペ2',
                 active_section: 'root', home_section: 'root',
+                tag: 'page02_page_root',
                 children: [{ code: 'root', tag: 'page02_page_root' }],
                 stye: {
                     color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
                 }
             },
             {
-                code: "page03", menu_label: 'ペ3',
-                active_section: 'root', home_section: 'root',
+                code: "page03",
+                menu_label: 'ペ3',
+                active_section: 'root',
+                home_section: 'root',
+                tag: 'page03_page_root',
                 children: [{ code: 'root', tag: 'page03_page_root', title: 'Home', description: '' }],
                 stye: {
                     color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }

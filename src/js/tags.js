@@ -1,24 +1,28 @@
-riot.tag2('app', '<menu-bar brand="{{label:\'RT\'}}" site="{site()}" moves="{[]}"></menu-bar> <div ref="page-area"></div>', 'app > .page { width: 100vw; height: 100vh; overflow: hidden; display: block; } app .hide,[data-is="app"] .hide{ display: none; }', '', function(opts) {
+riot.tag2('app-page-area', '', '', '', function(opts) {
+     this.on('update', (action) => {
+         if (this.opts.route)
+             ROUTER.draw(this, STORE.get('site.pages'), this.opts.route);
+     });
+});
+
+riot.tag2('app', '<menu-bar brand="{{label:\'RT\'}}" site="{site()}" moves="{[]}"></menu-bar> <app-page-area></app-page-area>', '', '', function(opts) {
      this.site = () => {
          return STORE.state().get('site');
      };
 
      STORE.subscribe((action)=>{
-         if (action.type!='MOVE-PAGE')
-             return;
+         if (action.type=='MOVE-PAGE') {
+             dump();
+             this.tags['app-page-area'].update({ opts: { route: action.data }});
+             }
+         })
 
-         let tags= this.tags;
+         window.addEventListener('resize', (event) => {
+             this.update();
+         });
 
-         tags['menu-bar'].update();
-         ROUTER.switchPage(this, this.refs['page-area'], this.site());
-     })
-
-     window.addEventListener('resize', (event) => {
-         this.update();
-     });
-
-     if (location.hash=='')
-         location.hash=STORE.get('site.active_page');
+         if (location.hash=='')
+             location.hash=STORE.get('site.active_page');
 });
 
 riot.tag2('markdown-preview', '', 'markdown-preview h1 { font-weight: bold; font-size: 20px; margin-top: 11px; margin-bottom: 6px; } markdown-preview h2 { font-weight: bold; font-size: 18px; margin-top: 8px; margin-bottom: 4px; } markdown-preview h3 { font-weight: bold; font-size: 16px; margin-top: 6px; margin-bottom: 3px; } markdown-preview h4 { font-weight: bold; font-size: 14px; margin-top: 6px; margin-bottom: 3px; } markdown-preview h5 { font-weight: bold; font-size: 12px; margin-bottom: 4px; } markdown-preview * { font-size: 12px; } markdown-preview table { border-collapse: collapse; } markdown-preview td { border: solid 0.6px #888888; padding: 2px 5px; } markdown-preview th { border: solid 0.6px #888888; padding: 2px 5px; background: #eeeeee; }', '', function(opts) {
@@ -182,21 +186,7 @@ riot.tag2('section-list', '<table class="table is-bordered is-striped is-narrow 
 riot.tag2('sections-list', '<table class="table"> <tbody> <tr each="{opts.data}"> <td><a href="{hash}">{name}</a></td> </tr> </tbody> </table>', '', '', function(opts) {
 });
 
-riot.tag2('home', '', '', '', function(opts) {
-     this.mixin(MIXINS.page);
-
-     this.on('mount', () => { this.draw(); });
-     this.on('update', () => { this.draw(); });
-});
-
 riot.tag2('home_page_root', '<section-header title="HOME"></section-header>', '', '', function(opts) {
-});
-
-riot.tag2('page01', '', '', '', function(opts) {
-     this.mixin(MIXINS.page);
-
-     this.on('mount', () => { this.draw(); });
-     this.on('update', () => { this.draw(); });
 });
 
 riot.tag2('page01_page1', '<section-header-with-breadcrumb title="Page01 Sec 1"></section-header-with-breadcrumb>', '', '', function(opts) {
@@ -215,13 +205,6 @@ riot.tag2('page01_page_root', '<section-header title="Page01"></section-header> 
 
          return page.sections;
      }
-});
-
-riot.tag2('page02', '', '', '', function(opts) {
-     this.mixin(MIXINS.page);
-
-     this.on('mount', () => { this.draw(); });
-     this.on('update', () => { this.draw(); });
 });
 
 riot.tag2('page02_page_root', '<section-header title="Page02"></section-header> <page-tabs core="{page_tabs}" callback="{clickTab}"></page-tabs> <div> <page02_page_tab_readme class="hide"></page02_page_tab_readme> <page02_page_tab_tab1 class="hide"></page02_page_tab_tab1> <page02_page_tab_tab2 class="hide"></page02_page_tab_tab2> <page02_page_tab_tab3 class="hide"></page02_page_tab_tab3> <page02_page_tab_help class="hide"></page02_page_tab_help> </div> <section-footer></section-footer>', '', '', function(opts) {
@@ -257,13 +240,6 @@ riot.tag2('page02_page_tab_tab2', '<section class="section"> <div class="contain
 });
 
 riot.tag2('page02_page_tab_tab3', '<section class="section"> <div class="container"> <h1 class="title">TAB3</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
-});
-
-riot.tag2('page03', '', '', '', function(opts) {
-     this.mixin(MIXINS.page);
-
-     this.on('mount', () => { this.draw(); });
-     this.on('update', () => { this.draw(); });
 });
 
 riot.tag2('page03_page_root', '<section-header title="Page03"></section-header> <section-footer></section-footer>', '', '', function(opts) {
