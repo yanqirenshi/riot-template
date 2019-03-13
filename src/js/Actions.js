@@ -1,9 +1,9 @@
 class Actions extends Vanilla_Redux_Actions {
     movePage (data) {
-        return {
+        STORE.dispatch({
             type: 'MOVE-PAGE',
             data: data
-        };
+        });
     }
     fetchData () {
         API.get('/', function (response) {
