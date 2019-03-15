@@ -14,28 +14,35 @@ class Store extends Vanilla_Redux_Store {
                 }
             },
             {
-                code: "page01",
-                menu_label: 'ペ1',
-                tag: 'page01_page_root',
+                code: "use-tabs",
+                menu_label: 'タブ',
+                tag: 'page_use-tabs',
                 children: [],
                 stye: {
                     color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
                 }
             },
             {
-                code: "page02",
-                menu_label: 'ペ2',
-                tag: 'page02_page_root',
-                children: [],
-                stye: {
-                    color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
-                }
-            },
-            {
-                code: "page03",
-                menu_label: 'ペ3',
-                tag: 'page03_page_root',
-                children: [],
+                code: "have-child",
+                menu_label: '子供',
+                tag: 'page_have-childs',
+                children: [
+                    {
+                        code: "child01",
+                        tag: 'page_have-childs_page1',
+                        children: [],
+                    },
+                    {
+                        code: "child02",
+                        tag: 'page_have-childs_page2',
+                        children: [],
+                    },
+                    {
+                        code: "child03",
+                        tag: 'page_have-childs_page3',
+                        children: [],
+                    },
+                ],
                 stye: {
                     color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
                 }

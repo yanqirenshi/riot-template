@@ -1,4 +1,5 @@
-<page01_page_root>
+<page_have-childs>
+
     <section-header title="Page01"></section-header>
 
     <section-container title="セクション" data={sections()}>
@@ -6,14 +7,13 @@
         </sections-list>
     </section-container>
 
-    <section-footer></section-footer>
-
     <script>
      this.sections = () => {
          let pages = STORE.get('site').pages;
-         let page = pages.find((d) => { return d.code=='page01'; });
+         let page = pages.find((d) => { return d.code=='have-child'; });
 
-         return page.sections;
+         return page.children;
      }
     </script>
-</page01_page_root>
+
+</page_have-childs>
