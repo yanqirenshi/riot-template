@@ -1,4 +1,5 @@
 <app>
+
     <menu-bar brand={{label:'RT'}} site={site()} moves={[]}></menu-bar>
 
     <app-page-area></app-page-area>
@@ -9,6 +10,10 @@
      this.site = () => {
          return STORE.state().get('site');
      };
+     this.updateMenuBar = () => {
+         if (this.tags['menu-bar'])
+             this.tags['menu-bar'].update();
+     }
     </script>
 
 
@@ -19,7 +24,8 @@
 
      STORE.subscribe((action)=>{
          if (action.type=='MOVE-PAGE') {
-             this.tags['app-page-area'].update({ opts: { route: action.data }});
+             this.updateMenuBar();
+             this.tags['app-page-area'].update({ opts: { route: action.route }});
          }
      });
 
@@ -30,4 +36,5 @@
      if (location.hash=='')
          location.hash=STORE.get('site.active_page');
     </script>
+
 </app>

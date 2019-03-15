@@ -1,3 +1,3 @@
-<page01_page3>
-    <section-header-with-breadcrumb title="Page01 Sec 3"></section-header-with-breadcrumb>
-</page01_page3>
+<page_have-childs_page3>
+    <section-header-with-breadcrumb title="Child 3"></section-header-with-breadcrumb>
+</page_have-childs_page3>
