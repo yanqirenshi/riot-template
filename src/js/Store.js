@@ -9,18 +9,12 @@ class Store extends Vanilla_Redux_Store {
                 menu_label: '家',
                 tag: 'home_page_root',
                 children: [],
-                stye: {
-                    color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
-                }
             },
             {
                 code: "use-tabs",
                 menu_label: 'タブ',
                 tag: 'page_use-tabs',
                 children: [],
-                stye: {
-                    color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
-                }
             },
             {
                 code: "have-child",
@@ -43,9 +37,6 @@ class Store extends Vanilla_Redux_Store {
                         children: [],
                     },
                 ],
-                stye: {
-                    color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
-                }
             },
             {
                 code: "teams",
