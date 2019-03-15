@@ -45,4 +45,4 @@ var ROUTER = new VanillaRouterRiot({
         },
     }
 });
-ROUTER.start();
+ROUTER.mature().start();

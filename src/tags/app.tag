@@ -3,6 +3,8 @@
 
     <app-page-area></app-page-area>
 
+    <section-footer></section-footer>
+
     <script>
      this.site = () => {
          return STORE.state().get('site');
@@ -17,16 +19,15 @@
 
      STORE.subscribe((action)=>{
          if (action.type=='MOVE-PAGE') {
-             dump();
              this.tags['app-page-area'].update({ opts: { route: action.data }});
-             }
-         })
+         }
+     });
 
-         window.addEventListener('resize', (event) => {
-             this.update();
-         });
+     window.addEventListener('resize', (event) => {
+         this.update();
+     });
 
-         if (location.hash=='')
-             location.hash=STORE.get('site.active_page');
+     if (location.hash=='')
+         location.hash=STORE.get('site.active_page');
     </script>
 </app>

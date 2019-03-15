@@ -6,4 +6,5 @@
              ROUTER.draw(this, STORE.get('site.pages'), this.opts.route);
      });
     </script>
+
 </app-page-area>

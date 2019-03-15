@@ -5,12 +5,10 @@ class Store extends Vanilla_Redux_Store {
     pages() {
         return [
             {
-                code: "home", menu_label: '家',
-                active_section: 'root', home_section: 'root',
+                code: "home",
+                menu_label: '家',
                 tag: 'home_page_root',
-                children: [
-                    { code: 'root', tag: 'home_page_root' },
-                ],
+                children: [],
                 stye: {
                     color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
                 }
@@ -18,24 +16,17 @@ class Store extends Vanilla_Redux_Store {
             {
                 code: "page01",
                 menu_label: 'ペ1',
-                active_section: 'root',
-                home_section: 'root',
                 tag: 'page01_page_root',
-                children: [
-                    { code: 'root', tag: 'page01_page_root', name: 'root' },
-                    { code: 'sec1', tag: 'page01_page1',     name: 'page1' },
-                    { code: 'sec2', tag: 'page01_page2',     name: 'page2' },
-                    { code: 'sec3', tag: 'page01_page3',     name: 'page3' },
-                ],
+                children: [],
                 stye: {
                     color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
                 }
             },
             {
-                code: "page02", menu_label: 'ペ2',
-                active_section: 'root', home_section: 'root',
+                code: "page02",
+                menu_label: 'ペ2',
                 tag: 'page02_page_root',
-                children: [{ code: 'root', tag: 'page02_page_root' }],
+                children: [],
                 stye: {
                     color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
                 }
@@ -43,14 +34,31 @@ class Store extends Vanilla_Redux_Store {
             {
                 code: "page03",
                 menu_label: 'ペ3',
-                active_section: 'root',
-                home_section: 'root',
                 tag: 'page03_page_root',
-                children: [{ code: 'root', tag: 'page03_page_root', title: 'Home', description: '' }],
+                children: [],
                 stye: {
                     color: { 1: '#fdeff2', 2: '#e0e0e0', 3: '#e198b4', 4: '#ffffff', 5: '#eeeeee', 5: '#333333' }
                 }
-            }
+            },
+            {
+                code: "teams",
+                menu_label: '集',
+                tag: 'page_teams',
+                children: [
+                    {
+                        code: "members",
+                        children: [
+                            {
+                                code: "user-id",
+                                regex: /^\d+$/,
+                                // TODO: regex: { contents: /^\d+$/, type: 'integer' },
+                                tag: 'page_member',
+                                children: [],
+                            },
+                        ],
+                    },
+                ],
+            },
         ];
     }
     init () {

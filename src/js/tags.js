@@ -5,24 +5,23 @@ riot.tag2('app-page-area', '', '', '', function(opts) {
      });
 });
 
-riot.tag2('app', '<menu-bar brand="{{label:\'RT\'}}" site="{site()}" moves="{[]}"></menu-bar> <app-page-area></app-page-area>', '', '', function(opts) {
+riot.tag2('app', '<menu-bar brand="{{label:\'RT\'}}" site="{site()}" moves="{[]}"></menu-bar> <app-page-area></app-page-area> <section-footer></section-footer>', '', '', function(opts) {
      this.site = () => {
          return STORE.state().get('site');
      };
 
      STORE.subscribe((action)=>{
          if (action.type=='MOVE-PAGE') {
-             dump();
              this.tags['app-page-area'].update({ opts: { route: action.data }});
-             }
-         })
+         }
+     });
 
-         window.addEventListener('resize', (event) => {
-             this.update();
-         });
+     window.addEventListener('resize', (event) => {
+         this.update();
+     });
 
-         if (location.hash=='')
-             location.hash=STORE.get('site.active_page');
+     if (location.hash=='')
+         location.hash=STORE.get('site.active_page');
 });
 
 riot.tag2('markdown-preview', '', 'markdown-preview h1 { font-weight: bold; font-size: 20px; margin-top: 11px; margin-bottom: 6px; } markdown-preview h2 { font-weight: bold; font-size: 18px; margin-top: 8px; margin-bottom: 4px; } markdown-preview h3 { font-weight: bold; font-size: 16px; margin-top: 6px; margin-bottom: 3px; } markdown-preview h4 { font-weight: bold; font-size: 14px; margin-top: 6px; margin-bottom: 3px; } markdown-preview h5 { font-weight: bold; font-size: 12px; margin-bottom: 4px; } markdown-preview * { font-size: 12px; } markdown-preview table { border-collapse: collapse; } markdown-preview td { border: solid 0.6px #888888; padding: 2px 5px; } markdown-preview th { border: solid 0.6px #888888; padding: 2px 5px; background: #eeeeee; }', '', function(opts) {
@@ -243,4 +242,11 @@ riot.tag2('page02_page_tab_tab3', '<section class="section"> <div class="contain
 });
 
 riot.tag2('page03_page_root', '<section-header title="Page03"></section-header> <section-footer></section-footer>', '', '', function(opts) {
+});
+
+riot.tag2('page_member', '<section-header title="Member"></section-header>', '', '', function(opts) {
+     dump(this.opts._route)
+});
+
+riot.tag2('page_teams', '<section-header title="Teams"></section-header>', '', '', function(opts) {
 });
