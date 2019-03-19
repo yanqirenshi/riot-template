@@ -190,14 +190,13 @@ riot.tag2('section-list', '<table class="table is-bordered is-striped is-narrow 
 riot.tag2('sections-list', '<table class="table"> <tbody> <tr each="{opts.data}"> <td><a href="{hash}">{code}</a></td> <td>{tag}</td> </tr> </tbody> </table>', '', '', function(opts) {
 });
 
-riot.tag2('home_page_root', '<section-header title="HOME"></section-header>', '', '', function(opts) {
-});
+riot.tag2('page_have-childs', '<section-header title="Page01"></section-header> <section-container title="セクション" data="{sections()}"> <sections-list data="{opts.data}"> </sections-list> </section-container>', '', '', function(opts) {
+     this.sections = () => {
+         let pages = STORE.get('site').pages;
+         let page = pages.find((d) => { return d.code=='have-child'; });
 
-riot.tag2('page_member', '<section-header title="Member"></section-header>', '', '', function(opts) {
-     dump(this.opts._route)
-});
-
-riot.tag2('page_teams', '<section-header title="Teams"></section-header>', '', '', function(opts) {
+         return page.children;
+     }
 });
 
 riot.tag2('page_have-childs_page1', '<section-header-with-breadcrumb title="Child 1"></section-header-with-breadcrumb>', '', '', function(opts) {
@@ -209,13 +208,14 @@ riot.tag2('page_have-childs_page2', '<section-header-with-breadcrumb title="Chil
 riot.tag2('page_have-childs_page3', '<section-header-with-breadcrumb title="Child 3"></section-header-with-breadcrumb>', '', '', function(opts) {
 });
 
-riot.tag2('page_have-childs', '<section-header title="Page01"></section-header> <section-container title="セクション" data="{sections()}"> <sections-list data="{opts.data}"> </sections-list> </section-container>', '', '', function(opts) {
-     this.sections = () => {
-         let pages = STORE.get('site').pages;
-         let page = pages.find((d) => { return d.code=='have-child'; });
+riot.tag2('home_page', '<section-header title="HOME"></section-header>', '', '', function(opts) {
+});
 
-         return page.children;
-     }
+riot.tag2('page_member', '<section-header title="Member"></section-header>', '', '', function(opts) {
+     dump(this.opts._route)
+});
+
+riot.tag2('page_teams', '<section-header title="Teams"></section-header>', '', '', function(opts) {
 });
 
 riot.tag2('page_use-tabs', '<section-header title="Page02"></section-header> <div style="padding-left:55px;"> <page-tabs core="{page_tabs}" callback="{clickTab}"></page-tabs> </div> <div> <page_use-tabs_tab_readme class="hide"></page_use-tabs_tab_readme> <page_use-tabs_tab_tab1 class="hide"></page_use-tabs_tab_tab1> <page_use-tabs_tab_tab2 class="hide"></page_use-tabs_tab_tab2> <page_use-tabs_tab_tab3 class="hide"></page_use-tabs_tab_tab3> <page_use-tabs_tab_help class="hide"></page_use-tabs_tab_help> </div>', '', '', function(opts) {

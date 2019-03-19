@@ -7,14 +7,12 @@ class Store extends Vanilla_Redux_Store {
             {
                 code: "home",
                 menu_label: '家',
-                tag: 'home_page_root',
-                children: [],
+                tag: 'home_page',
             },
             {
                 code: "use-tabs",
                 menu_label: 'タブ',
                 tag: 'page_use-tabs',
-                children: [],
             },
             {
                 code: "have-child",
@@ -24,17 +22,14 @@ class Store extends Vanilla_Redux_Store {
                     {
                         code: "child01",
                         tag: 'page_have-childs_page1',
-                        children: [],
                     },
                     {
                         code: "child02",
                         tag: 'page_have-childs_page2',
-                        children: [],
                     },
                     {
                         code: "child03",
                         tag: 'page_have-childs_page3',
-                        children: [],
                     },
                 ],
             },
@@ -51,7 +46,6 @@ class Store extends Vanilla_Redux_Store {
                                 regex: /^\d+$/,
                                 // TODO: regex: { contents: /^\d+$/, type: 'integer' },
                                 tag: 'page_member',
-                                children: [],
                             },
                         ],
                     },
