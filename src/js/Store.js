@@ -68,9 +68,6 @@ class Store extends Vanilla_Redux_Store {
             }
         };
 
-        for (let page of data.site.pages)
-            this.setHashTo(page);
-
         this._contents = Immutable.Map(data);
         return this;
     }
