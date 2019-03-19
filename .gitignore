@@ -1,5 +1,5 @@
 *~
 node_modules/
 src/config.js
-libs/vanilla.js
-libs/vanilla.router.js
+src/libs/vanilla.js
+src/libs/vanilla.router.js
