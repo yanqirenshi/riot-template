@@ -379,6 +379,29 @@ riot.tag2('deployment-diagram', '<svg ref="graph"></svg>', 'deployment-diagram {
 });
 
 riot.tag2('screen-transition-diagram', '<div ref="screen-transition-diagram-root"> <svg id="screen-transition-diagram-svg" style="border: 1px solid #888888;" ref="screen-transition-diagram-svg"></svg> </div>', '', '', function(opts) {
+     this.makeEdges = (source) => {
+         let screens = source.screens.reduce((ht, d) => {
+             ht[d._id] = d;
+             return ht;
+         }, {});
+         let edges   = source.edges;
+
+         let out = edges.map((edge) => {
+             let from = screens[edge.from];
+             let to   = screens[edge.to];
+
+             return {
+                 _id: 35,
+                 _class: "EDGE",
+                 from_id: from._id,
+                 from_class: from._class,
+                 to_id: to._id,
+                 to_class: to._class,
+             }
+         });
+
+         return out;
+     };
      this.draw = () => {
          let d3svg = this.makeD3Svg();
          let svg = d3svg.Svg();
@@ -390,8 +413,14 @@ riot.tag2('screen-transition-diagram', '<div ref="screen-transition-diagram-root
              background: background,
          };
 
+         let source = this.opts.source
+         let data = {
+             screens: this.opts.source.screens,
+             edges: this.makeEdges(source),
+         };
+
          new D3ScreenTransitionDiagram(options)
-             .data(this.opts.source)
+             .data(data)
              .sizing()
              .positioning()
              .draw();
