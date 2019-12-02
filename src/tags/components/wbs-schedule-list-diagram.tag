@@ -30,7 +30,7 @@
              state.projects.list[0],
              state.wbs,
              state.workpackages,
-             state.edges,
+             state.structures,
              options);
      };
     </script>

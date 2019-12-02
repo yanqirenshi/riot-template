@@ -1,0 +1,40 @@
+{
+    "projects" : [
+        { "_id" : 1, "_class"  : "PROJECT", "name" : "riot.Template", "description" : "", "schedule": { "start": null, "end": null }, "result": { "start": null, "end": null } }
+    ],
+    "wbs" : [
+        { "_id" : 10, "_class" : "WBS", "name" : "Procedures", "  description" : "", "schedule": { "start": null, "end": null }, "result": { "start": null, "end": null } },
+        { "_id" : 11, "_class" : "WBS", "name" : "E2E Tests", "   description" : "", "schedule": { "start": null, "end": null }, "result": { "start": null, "end": null } }
+    ],
+    "workpackages" : [
+        {
+            "_id" : 1000000, "_class" : "WORKPACKAGE", "name" : "Workpackage: Procedures 1", "description" : "",
+            "schedule": { "start": "2019-12-02T00:00:00.000Z", "end": "2019-12-03T00:00:00.000Z" },
+            "result":   { "start": "2019-12-02T00:00:00.000Z", "end": "2019-12-03T00:00:00.000Z" }
+        },
+        {
+            "_id" : 1000001, "_class" : "WORKPACKAGE", "name" : "Workpackage: Procedures 2", "description" : "",
+            "schedule": { "start": "2019-12-02T00:00:00.000Z", "end": "2019-12-03T00:00:00.000Z" },
+            "result":   { "start": "2019-12-02T00:00:00.000Z", "end": "2019-12-03T00:00:00.000Z" }
+        },
+        {
+            "_id" : 1000002, "_class" : "WORKPACKAGE", "name" : "Workpackage: E2E Tests 1",  "description" : "",
+            "schedule": { "start": "2019-12-02T00:00:00.000Z", "end": "2019-12-03T00:00:00.000Z" },
+            "result":   { "start": "2019-12-02T00:00:00.000Z", "end": "2019-12-03T00:00:00.000Z" }
+        },
+        {
+            "_id" : 1000003, "_class" : "WORKPACKAGE", "name" : "Workpackage: E2E Tests 2",  "description" : "",
+            "schedule": { "start": "2019-12-02T00:00:00.000Z", "end": "2019-12-03T00:00:00.000Z" },
+            "result":   { "start": "2019-12-02T00:00:00.000Z", "end": "2019-12-03T00:00:00.000Z" }
+        }
+    ],
+    "structures" : [
+        { "from" : 1, "to" : 10 },
+        { "from" : 1, "to" : 11 },
+        { "from" : 10, "to" : 1000000 },
+        { "from" : 10, "to" : 1000001 },
+        { "from" : 11, "to" : 1000002 },
+        { "from" : 11, "to" : 1000003 }
+    ],
+    "dependencies" : []
+}

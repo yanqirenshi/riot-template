@@ -70,4 +70,22 @@ class Actions extends Vanilla_Redux_Actions {
             data: { std: state },
         };
     }
+    fetchJsonWbsSchedule () {
+        Request.get('/data/wbs-schedule.json', function (response) {
+            STORE.dispatch(this.fetchedJsonWbsSchedule(response));
+        }.bind(this));
+    }
+    fetchedJsonWbsSchedule (response) {
+        let state = STORE.get('wbs');
+
+        let wbs = new WbsDiagram();
+
+        state.schedules = wbs.response2state(response);
+
+        return {
+            type: 'FETCHED-JSON-WBS-SCHEDULE',
+            data: { wbs: state },
+        };
+    }
+
 }

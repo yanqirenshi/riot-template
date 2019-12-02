@@ -29,10 +29,34 @@
     </section>
 
     <script>
+     this.on('mount', () => {
+         ACTIONS.fetchJsonWbsSchedule();
+     });
+     STORE.subscribe((action) => {
+         if (action.type=='FETCHED-JSON-WBS-SCHEDULE') {
+             this.update();
+             return;
+         }
+     });
+    </script>
+
+
+    <script>
      this.wbsData = () => {
          this.WBS = new WbsDiagram();
 
-         return this.WBS.ensureSource(null);
+         let data = STORE.get('wbs.schedules');
+
+         let i = 100000000;
+
+         for (let d of data.workpackages.list) {
+             d.schedule._id = i++;
+             d.schedule._class = "SCHEDULE";
+             d.result._id = i++;
+             d.result._class = "RESULT";
+         }
+
+         return data;
      };
     </script>
 

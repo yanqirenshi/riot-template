@@ -1,6 +1,6 @@
 {
     "projects" : [
-        { "_id" : 1, "_class"  : "riot.Template", "name" : "TATTA (RBR)", "description" : "" }
+        { "_id" : 1, "_class"  : "PROJECT", "name" : "riot.Template", "description" : "" }
     ],
     "wbs" : [
         { "_id" : 10, "_class" : "WBS", "name" : "Procedures", "  description" : "" },
