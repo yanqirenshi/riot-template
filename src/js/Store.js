@@ -59,7 +59,23 @@ class Store extends Vanilla_Redux_Store {
                 active_page: 'home',
                 home_page: 'home',
                 pages: this.pages(),
-            }
+            },
+            wbs: {
+                structures: {
+                    projects:     { ht: {}, list: [] },
+                    wbs:          { ht: {}, list: [] },
+                    workpackages: { ht: {}, list: [] },
+                    edges:        { ht: {}, list: [] },
+                    dependencies: { ht: {}, list: [] },
+                },
+                schedules: {
+                    projects:     { ht: {}, list: [] },
+                    wbs:          { ht: {}, list: [] },
+                    workpackages: { ht: {}, list: [] },
+                    edges:        { ht: {}, list: [] },
+                    dependencies: { ht: {}, list: [] },
+                },
+            },
         };
 
         this._contents = Immutable.Map(data);

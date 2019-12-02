@@ -6,7 +6,8 @@
             <h2 class="subtitle"></h2>
 
             <div class="contents">
-                <wbs-structure-diagram></wbs-structure-diagram>
+                <wbs-structure-diagram source={this.opts.source}
+                                       start_node_id={12}></wbs-structure-diagram>
             </div>
         </div>
     </section>

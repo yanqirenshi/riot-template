@@ -1,5 +1,62 @@
 class WbsDiagram {
     /////
+    ///// response2state
+    /////
+    list2pool (list) {
+        let ht = list.reduce((ht, obj) => {
+            ht[obj._id] = obj;
+
+            return ht;
+        }, {});
+
+        return { ht: ht, list: list };
+    }
+    list2Structures (list, projects, wbs, workpackages) {
+        let getWbsNode = (_id) => {
+            return projects.ht[_id] || wbs.ht[_id] || workpackages.ht[_id];
+        };
+
+        if (!this.edge_id)
+            this.edge_id = 1;
+
+        let out = list.map((structure) => {
+            let node_from = getWbsNode(structure.from);
+            let node_to   = getWbsNode(structure.to);
+
+            if (!node_from || !node_to) {
+                console.warn('どっちもあらへん。from=%d, to=%d', structure.from, structure.to);
+                return null;
+            }
+
+            return {
+                _id        : this.edge_id++,
+                _class     : "EDGE",
+                from_class : node_from._class,
+                from_id    : node_from._id,
+                to_class   : node_to._class,
+                to_id      : node_to._id,
+            };
+        });
+
+        return out.filter((d) => { return !(d===null); });
+    }
+    response2state (response) {
+        let projects     = this.list2pool(response.projects);
+        let wbs          = this.list2pool(response.wbs);
+        let workpackages = this.list2pool(response.workpackages);
+
+        let structures   = this.list2Structures (response.structures,   projects, wbs, workpackages);
+        let dependencies = this.list2Structures (response.dependencies, projects, wbs, workpackages);
+
+        return {
+            projects:     projects,
+            wbs:          wbs,
+            workpackages: workpackages,
+            structures:   this.list2pool(structures),
+            dependencies: this.list2pool(dependencies),
+        };
+    }
+    /////
     ///// ensureSource
     /////
     ensureSource (source) {
@@ -12,32 +69,23 @@ class WbsDiagram {
             projects: Object.assign({}, pool),
             wbs: Object.assign({}, pool),
             workpackages: Object.assign({}, pool),
-            edges: Object.assign({}, pool),
+            structures: Object.assign({}, pool),
             dependencies: Object.assign({}, pool),
         };
     };
     /////
     ///// getTargetWbs
     /////
-    getTargetWbs (target, wbs) {
-         let target_wbs = wbs.list.find((d) => {
-             return d._id == target._id;
-         });
+    getStartNode (target_id, state) {
+        let node = state.projects.ht[target_id]
+            || state.wbs.ht[target_id]
+            || state.workpackages.ht[target_id];
 
-         if (!target_wbs)
-             return null;
+        if (node)
+            return node;
 
-         return target_wbs;
-     };
-    getStartNode (target, state) {
-         if (!target)
-             return null;
-
-         let node = this.getTargetWbs(target, state.wbs) ||
-                    this.getTargetWbs(target, state.workpackages);
-
-         return node;
-     }
+        throw new Error('Not found start node. _id=' + target_id);
+    }
     /////
     ///// StructureOptions
     /////

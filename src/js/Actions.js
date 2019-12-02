@@ -1,4 +1,4 @@
-class Actions extends Vanilla_Redux_Actions {
+class Actions extends Vanilla_Redux_Actions {  
     movePage (data) {
         let state = STORE.get('site');
 
@@ -20,6 +20,24 @@ class Actions extends Vanilla_Redux_Actions {
         return {
             type: 'FETCHED-DATA',
             data: response,
+            target: 'stage'
+        };
+    }
+    fetchJsonWbsStructure () {
+        Request.get('/data/wbs-structure.json', function (response) {
+            STORE.dispatch(this.fetchedJsonWbsStructure(response));
+        }.bind(this));
+    }
+    fetchedJsonWbsStructure (response) {
+        let state = STORE.get('wbs');
+
+        let wbs = new WbsDiagram();
+
+        state.structures = wbs.response2state(response);
+
+        return {
+            type:   'FETCHED-JSON-WBS-STRUCTURE',
+            data:   { wbs: state },
             target: 'stage'
         };
     }

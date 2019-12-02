@@ -10,7 +10,6 @@
      };
      this.data = () => {
          let state = this.WBS.ensureSource(opts.source)
-
          let options = this.wbsOptions();
 
          if (state.projects.list.length==0)
@@ -19,10 +18,10 @@
          let wnqi = new Wnqi()
 
          return wnqi.composeTreeFlat(
-             this.WBS.getStartNode(this.opts, state),
+             this.WBS.getStartNode(this.opts.start_node_id, state),
              state.wbs,
              state.workpackages,
-             state.edges,
+             state.structures,
              options);
      };
     </script>

@@ -193,6 +193,121 @@ riot.tag2('section-list', '<table class="table is-bordered is-striped is-narrow 
      };
 });
 
+riot.tag2('wbs-guntt-chart', '<div style="overflow:auto;"> <svg class="chart-yabane"></svg> </div>', '', '', function(opts) {
+     this.on('update', (action) => {
+         let tree = this.opts.data ? this.opts.data : [];
+         let selector = 'svg.chart-yabane';
+
+         let options = {
+             stage: {
+                 selector: selector,
+                 padding: 11,
+             },
+             scale: this.opts.options.scale,
+         };
+
+         let d3yabane = new D3jsYabane({ callback: this.opts.callback })
+             .config(options)
+             .setScale()
+             .makeStage()
+             .data(tree)
+             .draw();
+     });
+});
+
+riot.tag2('wbs-tree-list', '<table class="table is-bordered is-narrow is-hoverable is-fullwidth"> <thead> <tr> <th rowspan="2" class="{isHideCol(\'code\')}">Code</th> <th rowspan="2" class="{isHideCol(\'name\')}">Name</th> <th colspan="4" class="{isHideCol(\'schedule\')}">Schedule</th> <th colspan="4" class="{isHideCol(\'result\')}">Result</th> <th rowspan="2" class="{isHideCol(\'operators\')} {hideOperators()}"> 操作 </th> <th rowspan="2" class="{isHideCol(\'description\')}">Description</th> </tr> <tr> <th colspan="2" class="{isHideCol(\'schedule\')}">start</th> <th colspan="2" class="{isHideCol(\'schedule\')}">end</th> <th colspan="2" class="{isHideCol(\'result\')}">start</th> <th colspan="2" class="{isHideCol(\'result\')}">end</th> </tr> </thead> <tbody> <tr each="{tableData()}" class="{tool.projectClass(_core._class)}"> <td nowrap class="{isHideCol(\'code\')}"> <a href="{pageLinkUrl(_core)}">{_core._id}</a> </td> <td nowrap class="{isHideCol(\'name\')}"> <span class="tree-mergin">{tool.margin(_level)}</span> <span>{_core.name}</span> </td> <td class="{_class} {isHideCol(\'schedule\')}" nowrap> {tool.date2str(term(_core,\'schedule\',\'start\'))} </td> <td class="week {_class} {isHideCol(\'schedule\')}" nowrap> {tool.date2week(term(_core,\'schedule\',\'start\'))} </td> <td class="{_class} {isHideCol(\'schedule\')}" nowrap> {tool.date2str(term(_core,\'schedule\',\'end\'))} </td> <td class="week {_class} {isHideCol(\'schedule\')}" nowrap> {tool.date2week(term(_core,\'schedule\',\'end\'))} </td> <td class="{_class} {isHideCol(\'result\')}" nowrap> {tool.date2str(term(_core,\'result\',\'start\'))} </td> <td class="week {_class} {isHideCol(\'result\')}" nowrap> {tool.date2week(term(_core,\'result\',\'start\'))} </td> <td class="{_class} {isHideCol(\'result\')}" nowrap> {tool.date2str(term(_core,\'result\',\'end\'))} </td> <td class="week {_class} {isHideCol(\'result\')}" nowrap> {tool.date2week(term(_core,\'result\',\'end\'))} </td> <td class="operators {isHideCol(\'operators\')} {hideOperators()}"> <button class="button is-small add-child {hideAddChildOperator(this)}" onclick="{clickAddChild}" node_id="{_core._id}"> 子を追加 </button> <button class="button is-small delete-node {hideDeleteOperator(this)}" onclick="{clickDeleteWp}" node_id="{_core._id}"> 削除 </button> </td> <td nowrap class="{isHideCol(\'description\')}"> <span>{_core.description}</span> </td> </tr> </tbody> </table>', 'wbs-tree-list .table th { background: #EAE2D6; color: #867666; font-size: 12px; vertical-align: middle; text-align: center; } wbs-tree-list .table td { font-size: 12px; vertical-align: middle; } wbs-tree-list .table tr.project td { font-size: 16px; font-weight: bold; } wbs-tree-list .table tr.wbs td { font-size: 14px; font-weight: bold; } wbs-tree-list td.WBS { color: #888888; } wbs-tree-list td.PROJECT { color: #666666; } wbs-tree-list td.operators { text-align: center; } wbs-tree-list td.operators > button.button { width: 100%; } wbs-tree-list td.operators > button.button.add-child:hover { background: #89c3eb; color: #ffffff; font-weight: bold; } wbs-tree-list td.operators > button.button.delete-node:hover { background: #ec6d71; color: #ffffff; font-weight: bold; } wbs-tree-list span.tree-mergin { font-size: 12px; font-weight: normal; } wbs-tree-list .table td.week { font-size: 12px; padding-left: 1px; padding-right: 1px; text-align: center; }', '', function(opts) {
+     this.tool = new Wbs();
+
+     this.pageLinkUrl = (record) => {
+         let keys = "options.rows.operators.pageLink"
+         let func = keys.split('.').reduce((a, b) => {
+             if (!a || !a[b])
+                 return null;
+
+             return a[b];
+         }, this.opts);
+
+         if (func)
+             return func(record);
+
+         return this.tool.hashWbsPage(record._id, record._class);
+     };
+
+     this.clickAddChild = (e) => {
+         this.opts.callback('open-add-child', {
+             _id: e.target.getAttribute('node_id')
+         });
+     };
+     this.clickDeleteWp = (e) => {
+         this.opts.callback('open-delete-workpackage', {
+             _id: e.target.getAttribute('node_id')
+         });
+     };
+     STORE.subscribe((action) => {
+         if (action.type=='FETCHED-PROJECT-TREE')
+             this.update();
+
+         if (action.type=='MOVE-PAGE')
+             this.update();
+     });
+
+     this.options = { columns: this.opts.options.columns };
+     this.isHideCol = (keys_str) => {
+         if (!this.options.columns)
+             return '';
+
+         let keys = keys_str.split('.');
+         let options = { children: this.options.columns };
+
+         for (let key of keys) {
+             let next = options.children[key]
+
+             if (!next)
+                 return '';
+
+             options = next;
+         }
+
+         return options.hide ? 'hide' : '';
+     };
+     this.hideOperators = () => {
+         if (!this.opts.options ||
+             !this.opts.options.security)
+             return '';
+
+         let v = (this.opts.options.security.create || this.opts.options.security.delete);
+
+         return v ? '' : 'hide';
+     };
+     this.hideAddChildOperator = (data) => {
+         return data._class=='WBS' ? '' : 'hide';
+     };
+     this.hideDeleteOperator = (data) => {
+         return data._class=='WORKPACKAGE' ? '' : 'hide';
+     };
+
+     this.term = (data, key, type) => {
+         if (!data || !data[key]) return null;
+
+         return data[key][type];
+     };
+     this.tableData = () => {
+         let data = this.opts.data;
+
+         if (!data)
+             return [];
+
+         let options = this.opts.options;
+         if (options.rows && options.rows.workpackage)
+             if (options.rows.workpackage.hide)
+                 return data.filter((d) => {
+                     return d._class != "WORKPACKAGE"
+                 });
+
+         return data;
+     };
+});
+
 riot.tag2('sections-list', '<table class="table"> <tbody> <tr each="{opts.data}"> <td><a href="{hash}">{code}</a></td> <td>{tag}</td> </tr> </tbody> </table>', '', '', function(opts) {
 });
 
@@ -294,7 +409,22 @@ riot.tag2('deployment-diagram', '<svg ref="graph"></svg>', 'deployment-diagram {
      });
 });
 
-riot.tag2('page-use-tabs', '<section-header title="Page02"></section-header> <div style="padding-left:55px;"> <page-tabs core="{page_tabs}" callback="{clickTab}"></page-tabs> </div> <div> <page-use-tabs_tab_readme class="hide"></page-use-tabs_tab_readme> <page-use-tabs_tab-screen-transition-diagram class="hide"></page-use-tabs_tab-screen-transition-diagram> <page-use-tabs_tab-env-config-diagram class="hide"></page-use-tabs_tab-env-config-diagram> <page-use-tabs_tab-e2e-test class="hide"></page-use-tabs_tab-e2e-test> <page-use-tabs_tab-procedures class="hide"></page-use-tabs_tab-procedures> <page-use-tabs_tab-models class="hide"></page-use-tabs_tab-models> <page-use-tabs_tab-components class="hide"></page-use-tabs_tab-components> <page-use-tabs_tab-api class="hide"></page-use-tabs_tab-api> <page-use-tabs_tab-data-store class="hide"></page-use-tabs_tab-data-store> <page-use-tabs_tab-classes class="hide"></page-use-tabs_tab-classes> </div>', '', '', function(opts) {
+riot.tag2('page-use-tabs', '<section-header title="Page02"></section-header> <div style="padding-left:55px;"> <page-tabs core="{page_tabs}" callback="{clickTab}"></page-tabs> </div> <div> <page-use-tabs_tab_readme class="hide" source="{children_source.schedules}"></page-use-tabs_tab_readme> <page-use-tabs_tab-screen-transition-diagram class="hide"></page-use-tabs_tab-screen-transition-diagram> <page-use-tabs_tab-env-config-diagram class="hide"></page-use-tabs_tab-env-config-diagram> <page-use-tabs_tab-e2e-test class="hide" source="{children_source.structures}"></page-use-tabs_tab-e2e-test> <page-use-tabs_tab-procedures class="hide" source="{children_source.structures}"></page-use-tabs_tab-procedures> <page-use-tabs_tab-models class="hide" source="{children_source.structures}"></page-use-tabs_tab-models> <page-use-tabs_tab-components class="hide" source="{children_source.structures}"></page-use-tabs_tab-components> <page-use-tabs_tab-api class="hide" source="{children_source.structures}"></page-use-tabs_tab-api> <page-use-tabs_tab-data-store class="hide" source="{children_source.structures}"></page-use-tabs_tab-data-store> <page-use-tabs_tab-classes class="hide" source="{children_source.structures}"></page-use-tabs_tab-classes> </div>', '', '', function(opts) {
+     this.children_source = STORE.get('wbs');
+     this.on('update', () => {
+         this.source = STORE.get('wbs');
+     });
+     this.on('before-mount', () => {
+         this.source = STORE.get('wbs');
+     });
+     STORE.subscribe((action) => {
+         if (action.type=='FETCHED-JSON-WBS-STRUCTURE') {
+             this.update();
+             return;
+         }
+
+     });
+
      this.page_tabs = new PageTabs([
          {code: 'readme',     label: 'README',      tag: 'page-use-tabs_tab_readme' },
          {code: 'tab1',       label: '画面遷移図',  tag: 'page-use-tabs_tab-screen-transition-diagram' },
@@ -310,7 +440,9 @@ riot.tag2('page-use-tabs', '<section-header title="Page02"></section-header> <di
 
      this.on('mount', () => {
          this.page_tabs.switchTab(this.tags)
-         this.update();
+
+         ACTIONS.fetchJsonWbsStructure();
+
      });
 
      this.clickTab = (e, action, data) => {
@@ -319,19 +451,19 @@ riot.tag2('page-use-tabs', '<section-header title="Page02"></section-header> <di
      };
 });
 
-riot.tag2('page-use-tabs_tab-api', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-api', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram source="{this.opts.source}" start_node_id="{14}"></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page-use-tabs_tab-classes', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-classes', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram source="{this.opts.source}" start_node_id="{16}"></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page-use-tabs_tab-components', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-components', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram source="{this.opts.source}" start_node_id="{13}"></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page-use-tabs_tab-data-store', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-data-store', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram source="{this.opts.source}" start_node_id="{15}"></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page-use-tabs_tab-e2e-test', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-e2e-test', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram source="{this.opts.source}" start_node_id="{11}"></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
 riot.tag2('page-use-tabs_tab-env-config-diagram', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <p>参照：<a href="https://github.com/yanqirenshi/D3.Deployment">D3.Deployment (Github)</a></p> <deployment-diagram source="{graph_data}" h="{h()}" look_at="{{ x:-200, y: 600 }}"></deployment-diagram> </div> </div> </section>', '', '', function(opts) {
@@ -344,21 +476,10 @@ riot.tag2('page-use-tabs_tab-env-config-diagram', '<section class="section"> <di
      };
 });
 
-riot.tag2('page-use-tabs_tab-models', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-models', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram source="{this.opts.source}" start_node_id="{12}"></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page-use-tabs_tab-procedures', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram source="{childSource()}"></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
-     this.childSource = () => {
-         let pool = { ht: {}, list: [] };
-
-         return {
-             projects: Object.assign({}, pool),
-             wbs: Object.assign({}, pool),
-             workpackages: Object.assign({}, pool),
-             edges: Object.assign({}, pool),
-             dependencies: Object.assign({}, pool),
-         };
-     }
+riot.tag2('page-use-tabs_tab-procedures', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram source="{this.opts.source}" start_node_id="{10}"></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
 riot.tag2('page-use-tabs_tab-screen-transition-diagram', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <p>参照：<a href="https://github.com/yanqirenshi/Asshole">Asshole (Github)</a></p> <p>TODO：Use <a href="https://github.com/yanqirenshi/D3.Sketch">D3.Sketch (Github)</a></p> <screen-transition-diagram source="{graph_data}" options="{graph_options}"></screen-transition-diagram> </div> </div> </section>', '', '', function(opts) {
@@ -535,7 +656,6 @@ riot.tag2('wbs-structure-diagram', '<wbs-tree-list data="{data()}" options="{wbs
      };
      this.data = () => {
          let state = this.WBS.ensureSource(opts.source)
-
          let options = this.wbsOptions();
 
          if (state.projects.list.length==0)
@@ -544,10 +664,10 @@ riot.tag2('wbs-structure-diagram', '<wbs-tree-list data="{data()}" options="{wbs
          let wnqi = new Wnqi()
 
          return wnqi.composeTreeFlat(
-             this.WBS.getStartNode(this.opts, state),
+             this.WBS.getStartNode(this.opts.start_node_id, state),
              state.wbs,
              state.workpackages,
-             state.edges,
+             state.structures,
              options);
      };
 });
