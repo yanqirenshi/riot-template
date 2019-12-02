@@ -313,19 +313,19 @@ riot.tag2('page-use-tabs', '<section-header title="Page02"></section-header> <di
      };
 });
 
-riot.tag2('page-use-tabs_tab-api', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-api', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page-use-tabs_tab-classes', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-classes', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page-use-tabs_tab-components', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-components', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
 riot.tag2('page-use-tabs_tab-data-store', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page-use-tabs_tab-e2e-test', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-e2e-test', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
 riot.tag2('page-use-tabs_tab-env-config-diagram', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <p>参照：<a href="https://github.com/yanqirenshi/D3.Deployment">D3.Deployment (Github)</a></p> <deployment-diagram source="{graph_data}" h="{h()}" look_at="{{ x:-200, y: 600 }}"></deployment-diagram> </div> </div> </section>', '', '', function(opts) {
@@ -338,10 +338,21 @@ riot.tag2('page-use-tabs_tab-env-config-diagram', '<section class="section"> <di
      };
 });
 
-riot.tag2('page-use-tabs_tab-models', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-models', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page-use-tabs_tab-procedures', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-procedures', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram source="{childSource()}"></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
+     this.childSource = () => {
+         let pool = { ht: {}, list: [] };
+
+         return {
+             projects: Object.assign({}, pool),
+             wbs: Object.assign({}, pool),
+             workpackages: Object.assign({}, pool),
+             edges: Object.assign({}, pool),
+             dependencies: Object.assign({}, pool),
+         };
+     }
 });
 
 riot.tag2('page-use-tabs_tab-screen-transition-diagram', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <p>参照：<a href="https://github.com/yanqirenshi/Asshole">Asshole (Github)</a></p> <p>TODO：Use <a href="https://github.com/yanqirenshi/D3.Sketch">D3.Sketch (Github)</a></p> <screen-transition-diagram source="{graph_data}" options="{graph_options}"></screen-transition-diagram> </div> </div> </section>', '', '', function(opts) {
@@ -432,4 +443,31 @@ riot.tag2('screen-transition-diagram', '<div ref="screen-transition-diagram-root
              console.log('---');
          }
      });
+});
+
+riot.tag2('wbs-schedule-diagram', '', '', '', function(opts) {
+});
+
+riot.tag2('wbs-structure-diagram', '<wbs-tree-list data="{data()}" options="{wbsOptions()}"></wbs-tree-list>', '', '', function(opts) {
+     this.WBS = new WbsDiagram();
+     this.wbsOptions = () => {
+         return this.WBS.StructureOptions(this.opts);
+     };
+     this.data = () => {
+         let state = this.WBS.ensureSource(opts.source)
+
+         let options = this.wbsOptions();
+
+         if (state.projects.list.length==0)
+             return [];
+
+         let wnqi = new Wnqi()
+
+         return wnqi.composeTreeFlat(
+             this.WBS.getStartNode(this.opts, state),
+             state.wbs,
+             state.workpackages,
+             state.edges,
+             options);
+     };
 });
