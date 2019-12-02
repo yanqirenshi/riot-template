@@ -1,0 +1,48 @@
+{
+    "projects" : [
+        { "_id" : 1, "_class"  : "riot.Template", "name" : "TATTA (RBR)", "description" : "" }
+    ],
+    "wbs" : [
+        { "_id" : 10, "_class" : "WBS", "name" : "Procedures", "  description" : "" },
+        { "_id" : 11, "_class" : "WBS", "name" : "E2E Tests", "   description" : "" },
+        { "_id" : 12, "_class" : "WBS", "name" : "Models", "      description" : "" },
+        { "_id" : 13, "_class" : "WBS", "name" : "Components", "  description" : "" },
+        { "_id" : 14, "_class" : "WBS", "name" : "API", "         description" : "" },
+        { "_id" : 15, "_class" : "WBS", "name" : "Data Stores", " description" : "" },
+        { "_id" : 16, "_class" : "WBS", "name" : "Classes", "     description" : "" }
+    ],
+    "workpackages" : [
+        { "_id" : 1000000, "_class" : "WORKPACKAGE", "name" : "Workpackage: Procedures 1",  "description" : "" },
+        { "_id" : 1000001, "_class" : "WORKPACKAGE", "name" : "Workpackage: E2E Tests 1",   "description" : "" },
+        { "_id" : 1000002, "_class" : "WORKPACKAGE", "name" : "Workpackage: Models 1",      "description" : "" },
+        { "_id" : 1000003, "_class" : "WORKPACKAGE", "name" : "Workpackage: Components 1",  "description" : "" },
+        { "_id" : 1000004, "_class" : "WORKPACKAGE", "name" : "Workpackage: API 1",         "description" : "" },
+        { "_id" : 1000005, "_class" : "WORKPACKAGE", "name" : "Workpackage: Data Stores 1", "description" : "" },
+        { "_id" : 1000006, "_class" : "WORKPACKAGE", "name" : "Workpackage: Classes 1",     "description" : "" }
+    ],
+    "structures" : [
+        { "from" : 1, "to" : 10 },
+        { "from" : 1, "to" : 11 },
+        { "from" : 1, "to" : 12 },
+        { "from" : 1, "to" : 13 },
+        { "from" : 1, "to" : 14 },
+        { "from" : 1, "to" : 15 },
+        { "from" : 1, "to" : 16 },
+        { "from" : 10, "to" : 1000000 },
+        { "from" : 11, "to" : 1000001 },
+        { "from" : 12, "to" : 1000002 },
+        { "from" : 13, "to" : 1000003 },
+        { "from" : 14, "to" : 1000004 },
+        { "from" : 15, "to" : 1000005 },
+        { "from" : 16, "to" : 1000006 }
+    ],
+    "dependencies" : [
+        { "from" : 1000000, "to" : 1000001 },
+        { "from" : 1000001, "to" : 1000002 },
+        { "from" : 1000002, "to" : 1000003 },
+        { "from" : 1000003, "to" : 1000004 },
+        { "from" : 1000004, "to" : 1000005 },
+        { "from" : 1000005, "to" : 1000006 },
+        { "from" : 1000006, "to" : 1000000 }
+    ]
+}
