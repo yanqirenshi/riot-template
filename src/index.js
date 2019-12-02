@@ -2,7 +2,12 @@
 /*  Request */
 /* ******** */
 var Uri = new Vanilla_URI();
-var Request = new Vanilla_Ajax('http', 'localhost', '');
+var Request = new Vanilla_Ajax({
+    scheme: _CONFIG.file.scheme,
+    host: _CONFIG.file.host,
+    port: _CONFIG.file.port,
+    path: _CONFIG.file.path,
+});
 var API = new Vanilla_Ajax({
     scheme: _CONFIG.api.scheme,
     host: _CONFIG.api.host,
