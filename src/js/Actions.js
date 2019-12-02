@@ -36,9 +36,24 @@ class Actions extends Vanilla_Redux_Actions {
         state.structures = wbs.response2state(response);
 
         return {
-            type:   'FETCHED-JSON-WBS-STRUCTURE',
-            data:   { wbs: state },
-            target: 'stage'
+            type: 'FETCHED-JSON-WBS-STRUCTURE',
+            data: { wbs: state },
         };
     }
+    fetchJsonEnvConfigDiagram () {
+        Request.get('/data/env-config-diagram.json', function (response) {
+            STORE.dispatch(this.fetchedJsonEnvConfigDiagram(response));
+        }.bind(this));
+    }
+    fetchedJsonEnvConfigDiagram (response) {
+        let state = STORE.get('diagrams');
+
+        state.environment = response;
+
+        return {
+            type: 'FETCHED-JSON-ENV-CONFIG-DIAGRAM',
+            data: { diagrams: state },
+        };
+    }
+
 }

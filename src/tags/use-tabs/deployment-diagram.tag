@@ -57,7 +57,7 @@
              w: size.w,
              h: size.h,
              x: camera.look.at.x,
-             y: camera.look.at.y,
+             y: camera.look.at.y - 600,
              scale: camera.scale,
          });
      }

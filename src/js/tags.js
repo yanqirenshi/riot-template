@@ -392,7 +392,7 @@ riot.tag2('deployment-diagram', '<svg ref="graph"></svg>', 'deployment-diagram {
              w: size.w,
              h: size.h,
              x: camera.look.at.x,
-             y: camera.look.at.y,
+             y: camera.look.at.y - 600,
              scale: camera.scale,
          });
      }
@@ -466,13 +466,19 @@ riot.tag2('page-use-tabs_tab-data-store', '<section class="section"> <div class=
 riot.tag2('page-use-tabs_tab-e2e-test', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <wbs-structure-diagram source="{this.opts.source}" start_node_id="{11}"></wbs-structure-diagram> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page-use-tabs_tab-env-config-diagram', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <p>参照：<a href="https://github.com/yanqirenshi/D3.Deployment">D3.Deployment (Github)</a></p> <deployment-diagram source="{graph_data}" h="{h()}" look_at="{{ x:-200, y: 600 }}"></deployment-diagram> </div> </div> </section>', '', '', function(opts) {
-     this.graph_data = {
-         nodes: [],
-         nodes: [],
-     }
+riot.tag2('page-use-tabs_tab-env-config-diagram', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <p>参照：<a href="https://github.com/yanqirenshi/D3.Deployment">D3.Deployment (Github)</a></p> <deployment-diagram source="{STORE.get(\'diagrams.environment\')}" h="{h()}" look_at="{{ x:-200, y: 600 }}"></deployment-diagram> </div> </div> </section>', '', '', function(opts) {
+     this.on('mount', () => {
+         ACTIONS.fetchJsonEnvConfigDiagram();
+     });
+     STORE.subscribe((action) => {
+         if (action.type=='FETCHED-JSON-ENV-CONFIG-DIAGRAM') {
+
+             return;
+         }
+     });
+
      this.h = () => {
-         return 555;
+         return 333;
      };
 });
 

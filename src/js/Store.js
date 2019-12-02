@@ -60,6 +60,12 @@ class Store extends Vanilla_Redux_Store {
                 home_page: 'home',
                 pages: this.pages(),
             },
+            diagrams: {
+                environment: {
+                    nodes: [],
+                    edges: [],
+                },
+            },
             wbs: {
                 structures: {
                     projects:     { ht: {}, list: [] },
