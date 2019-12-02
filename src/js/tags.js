@@ -1,7 +1,13 @@
 riot.tag2('app-page-area', '', '', '', function(opts) {
-     this.on('update', (action) => {
+     this.draw = () => {
          if (this.opts.route)
              ROUTER.draw(this, STORE.get('site.pages'), this.opts.route);
+     }
+     this.on('mount', () => {
+         this.draw();
+     });
+     this.on('update', () => {
+         this.draw();
      });
 });
 

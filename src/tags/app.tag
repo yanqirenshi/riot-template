@@ -18,10 +18,6 @@
 
 
     <script>
-     /* this.on('mount', () => {
-      *     ROUTER.rootElement(this.refs['page-area']);
-      * }); */
-
      STORE.subscribe((action)=>{
          if (action.type=='MOVE-PAGE') {
              this.updateMenuBar();
