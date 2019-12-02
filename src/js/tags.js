@@ -368,7 +368,12 @@ riot.tag2('page-use-tabs_tab-screen-transition-diagram', '<section class="sectio
      }
 });
 
-riot.tag2('page-use-tabs_tab_readme', '<section class="section"> <div class="container"> <h1 class="title">README</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab_readme', '<section class="section"> <div class="container"> <h1 class="title">Schedule</h1> <h2 class="subtitle"></h2> <section class="section"> <div class="container"> <h1 class="title is-4">List</h1> <div class="contents"> <wbs-schedule-list-diagram source="{wbsData()}"></wbs-schedule-list-diagram> </div> </div> </section> <section class="section"> <div class="container"> <h1 class="title is-4">Tree</h1> <div class="contents"> <wbs-schedule-tree-diagram source="{wbsData()}"></wbs-schedule-tree-diagram> </div> </div> </section> </div> </section>', '', '', function(opts) {
+     this.wbsData = () => {
+         this.WBS = new WbsDiagram();
+
+         return this.WBS.ensureSource(null);
+     };
 });
 
 riot.tag2('page-use-tabs_tab_tab3', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
@@ -445,11 +450,80 @@ riot.tag2('screen-transition-diagram', '<div ref="screen-transition-diagram-root
      });
 });
 
-riot.tag2('wbs-schedule-diagram', '', '', '', function(opts) {
+riot.tag2('wbs-schedule-list-diagram', '<wbs-tree-list data="{data()}" options="{wbs_list_options}"></wbs-tree-list>', '', '', function(opts) {
+     this.WBS = new WbsDiagram();
+
+     this.wbs_list_options = {
+         hide: {
+             wbs: {
+                 finished: false
+             },
+             workpackage: {
+                 finished: false
+             }
+         }
+     };
+     this.data = () => {
+         let state = this.WBS.ensureSource(opts.source)
+
+         let options = this.wbs_list_options;
+
+         if (state.projects.list.length==0)
+             return [];
+
+         let wbs = new Wbs()
+
+         return wbs.composeTreeFlat(
+             state.projects.list[0],
+             state.wbs,
+             state.workpackages,
+             state.edges,
+             options);
+     };
+});
+
+riot.tag2('wbs-schedule-diagram', '<wbs-guntt-chart data="{data()}" start="{start}" end="{end}" options="{wbsOptsions()}"></wbs-guntt-chart>', '', '', function(opts) {
+     this.WBS = new WbsDiagram();
+
+     this.wbsOptsions = () => {
+         let now   = moment().millisecond(0).second(0).minute(0).hour(0);
+
+         return {
+             scale: {
+                 x: {
+                     cycle: 'days',
+                     tick: 88,
+                     start: moment(now).add(-3, 'd'),
+                     end:   moment(now).add( 3, 'w'),
+                 }
+             },
+         };
+     }
+
+     this.data = () => {
+         let state = this.WBS.ensureSource(opts.source)
+
+         let options = {}
+
+         if (state.projects.list.length==0)
+             return [];
+
+         let wbs = new Wbs();
+         let x = state.projects.list.map((project) => {
+             return wbs.composeTree(
+                 project,
+                 state.wbs,
+                 state.workpackages,
+                 state.edges)
+         });
+
+         return x;
+     };
 });
 
 riot.tag2('wbs-structure-diagram', '<wbs-tree-list data="{data()}" options="{wbsOptions()}"></wbs-tree-list>', '', '', function(opts) {
      this.WBS = new WbsDiagram();
+
      this.wbsOptions = () => {
          return this.WBS.StructureOptions(this.opts);
      };

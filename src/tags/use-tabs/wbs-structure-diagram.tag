@@ -4,6 +4,7 @@
 
     <script>
      this.WBS = new WbsDiagram();
+
      this.wbsOptions = () => {
          return this.WBS.StructureOptions(this.opts);
      };
