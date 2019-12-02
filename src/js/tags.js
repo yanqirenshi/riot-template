@@ -218,6 +218,76 @@ riot.tag2('page-member', '<section-header title="Member"></section-header>', '',
 riot.tag2('page-teams', '<section-header title="Teams"></section-header>', '', '', function(opts) {
 });
 
+riot.tag2('deployment-diagram', '<svg ref="graph"></svg>', 'deployment-diagram { display: block; width: 100%; } deployment-diagram svg { border: 1px solid #eeeeee; }', 'riot-style="height:{opts.h}px;"', function(opts) {
+     this.sketcher = null;
+     this.draw = () => {
+         let data = this.opts.source;
+
+         let place = this.sketcher.getBase('forground');
+
+         new D3Deployment()
+             .init(place)
+             .data(data)
+             .draw(place);
+     };
+
+     this.sketcher = null;
+     this.makeCamera = (size) => {
+         let gain = 3.0
+
+         return {
+             look: {
+                 at: {
+                     x: (size.w /2 * -1) + (this.opts.look_at.x || 0),
+                     y: (size.h /2 * -1) + (this.opts.look_at.y || 0),
+                 },
+             },
+             scale: gain,
+         };
+     }
+     this.getSize = () => {
+         let size;
+         size = {
+             w: this.refs.graph.parentNode.clientWidth,
+             h: this.refs.graph.parentNode.clientHeight,
+         };
+
+         if (size.w<0)
+             size.w = 0;
+
+         if (size.h<0)
+             size.h = 0;
+
+         return size;
+     }
+     this.makeSketcher = () => {
+         let size   = this.getSize();
+         let camera = this.makeCamera(size);
+
+         return new DefaultSketcher({
+             element: {
+                 selector: 'deployment-diagram svg',
+             },
+             w: size.w,
+             h: size.h,
+             x: camera.look.at.x,
+             y: camera.look.at.y,
+             scale: camera.scale,
+         });
+     }
+     this.on('update', () => {
+         try {
+             this.sketcher = this.makeSketcher();
+
+             this.draw();
+         } catch (e) {
+             console.log('---');
+             console.log(e);
+             console.log('---');
+         }
+     });
+});
+
 riot.tag2('page-use-tabs', '<section-header title="Page02"></section-header> <div style="padding-left:55px;"> <page-tabs core="{page_tabs}" callback="{clickTab}"></page-tabs> </div> <div> <page-use-tabs_tab_readme class="hide"></page-use-tabs_tab_readme> <page-use-tabs_tab-screen-transition-diagram class="hide"></page-use-tabs_tab-screen-transition-diagram> <page-use-tabs_tab-env-config-diagram class="hide"></page-use-tabs_tab-env-config-diagram> <page-use-tabs_tab-e2e-test class="hide"></page-use-tabs_tab-e2e-test> <page-use-tabs_tab-procedures class="hide"></page-use-tabs_tab-procedures> <page-use-tabs_tab-models class="hide"></page-use-tabs_tab-models> <page-use-tabs_tab-components class="hide"></page-use-tabs_tab-components> <page-use-tabs_tab-api class="hide"></page-use-tabs_tab-api> <page-use-tabs_tab-data-store class="hide"></page-use-tabs_tab-data-store> <page-use-tabs_tab-classes class="hide"></page-use-tabs_tab-classes> </div>', '', '', function(opts) {
      this.page_tabs = new PageTabs([
          {code: 'readme',     label: 'README',      tag: 'page-use-tabs_tab_readme' },
@@ -258,7 +328,14 @@ riot.tag2('page-use-tabs_tab-data-store', '<section class="section"> <div class=
 riot.tag2('page-use-tabs_tab-e2e-test', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page-use-tabs_tab-env-config-diagram', '<section class="section"> <div class="container"> <h1 class="title">環境構成図</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-env-config-diagram', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <p>参照：<a href="https://github.com/yanqirenshi/D3.Deployment">D3.Deployment (Github)</a></p> <deployment-diagram source="{graph_data}" h="{h()}" look_at="{{ x:-200, y: 600 }}"></deployment-diagram> </div> </div> </section>', '', '', function(opts) {
+     this.graph_data = {
+         nodes: [],
+         nodes: [],
+     }
+     this.h = () => {
+         return 555;
+     };
 });
 
 riot.tag2('page-use-tabs_tab-models', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
@@ -267,11 +344,92 @@ riot.tag2('page-use-tabs_tab-models', '<section class="section"> <div class="con
 riot.tag2('page-use-tabs_tab-procedures', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page-use-tabs_tab-screen-transition-diagram', '<section class="section"> <div class="container"> <h1 class="title">画面遷移図</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-screen-transition-diagram', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"></h2> <div class="contents"> <p>参照：<a href="https://github.com/yanqirenshi/Asshole">Asshole (Github)</a></p> <p>TODO：Use <a href="https://github.com/yanqirenshi/D3.Sketch">D3.Sketch (Github)</a></p> <screen-transition-diagram source="{graph_data}" options="{graph_options}"></screen-transition-diagram> </div> </div> </section>', '', '', function(opts) {
+     this.graph_data = {
+         screens: [],
+         edges: [],
+     }
+     this.graph_options = {
+         h: 1500,
+         w: null,
+         x: 300,
+         y: 350,
+     }
 });
 
 riot.tag2('page-use-tabs_tab_readme', '<section class="section"> <div class="container"> <h1 class="title">README</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
 });
 
 riot.tag2('page-use-tabs_tab_tab3', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+});
+
+riot.tag2('screen-transition-diagram', '<div ref="screen-transition-diagram-root"> <svg id="screen-transition-diagram-svg" style="border: 1px solid #888888;" ref="screen-transition-diagram-svg"></svg> </div>', '', '', function(opts) {
+     this.draw = () => {
+         let d3svg = this.makeD3Svg();
+         let svg = d3svg.Svg();
+         let forground = svg.selectAll('g.base.forground');
+         let background = svg.selectAll('g.base.background');
+
+         let options = {
+             forground: forground,
+             background: background,
+         };
+
+         new D3ScreenTransitionDiagram(options)
+             .data(this.opts.source)
+             .sizing()
+             .positioning()
+             .draw();
+     }
+     function makeBases (d3svg) {
+         let svg = d3svg.Svg();
+
+         let base = [
+             { _id: -10, code: 'background' },
+             { _id: -15, code: 'forground' },
+         ];
+
+         svg.selectAll('g.base')
+            .data(base, (d) => { return d._id; })
+            .enter()
+            .append('g')
+            .attr('class', (d) => {
+                return 'base ' + d.code;
+            });
+     }
+     this.makeD3Svg = () => {
+         let parent = this.refs['screen-transition-diagram-root']
+         let w = parent.clientWidth
+         let h = this.opts.options.h;
+
+         let svg_tag = this.refs['screen-transition-diagram-svg'];
+         svg_tag.setAttribute('height',h);
+         svg_tag.setAttribute('width',w);
+
+         let d3svg = new D3Svg({
+             d3: d3,
+             svg: d3.select("#screen-transition-diagram-svg"),
+             x: this.opts.options.x,
+             y: this.opts.options.y,
+             w: w,
+             h: h,
+             scale: 1.6,
+         });
+
+         makeBases(d3svg);
+
+         return d3svg;
+     }
+     this.on('mount', () => {
+         this.draw();
+     });
+     this.on('update', () => {
+         try {
+             this.draw();
+         } catch (e) {
+             console.log('---');
+             console.log(e);
+             console.log('---');
+         }
+     });
 });
