@@ -190,7 +190,7 @@ riot.tag2('section-list', '<table class="table is-bordered is-striped is-narrow 
 riot.tag2('sections-list', '<table class="table"> <tbody> <tr each="{opts.data}"> <td><a href="{hash}">{code}</a></td> <td>{tag}</td> </tr> </tbody> </table>', '', '', function(opts) {
 });
 
-riot.tag2('page_have-childs', '<section-header title="Page01"></section-header> <section-container title="セクション" data="{sections()}"> <sections-list data="{opts.data}"> </sections-list> </section-container>', '', '', function(opts) {
+riot.tag2('page-have-childs', '<section-header title="Page01"></section-header> <section-container title="セクション" data="{sections()}"> <sections-list data="{opts.data}"> </sections-list> </section-container>', '', '', function(opts) {
      this.sections = () => {
          let pages = STORE.get('site').pages;
          let page = pages.find((d) => { return d.code=='have-child'; });
@@ -199,32 +199,37 @@ riot.tag2('page_have-childs', '<section-header title="Page01"></section-header> 
      }
 });
 
-riot.tag2('page_have-childs_page1', '<section-header-with-breadcrumb title="Child 1"></section-header-with-breadcrumb>', '', '', function(opts) {
+riot.tag2('page-have-childs_page1', '<section-header-with-breadcrumb title="Child 1"></section-header-with-breadcrumb>', '', '', function(opts) {
 });
 
-riot.tag2('page_have-childs_page2', '<section-header-with-breadcrumb title="Child 2"></section-header-with-breadcrumb>', '', '', function(opts) {
+riot.tag2('page-have-childs_page2', '<section-header-with-breadcrumb title="Child 2"></section-header-with-breadcrumb>', '', '', function(opts) {
 });
 
-riot.tag2('page_have-childs_page3', '<section-header-with-breadcrumb title="Child 3"></section-header-with-breadcrumb>', '', '', function(opts) {
+riot.tag2('page-have-childs_page3', '<section-header-with-breadcrumb title="Child 3"></section-header-with-breadcrumb>', '', '', function(opts) {
 });
 
-riot.tag2('home_page', '<section-header title="HOME"></section-header>', '', '', function(opts) {
+riot.tag2('page-home', '<section-header title="HOME"></section-header>', '', '', function(opts) {
 });
 
-riot.tag2('page_member', '<section-header title="Member"></section-header>', '', '', function(opts) {
+riot.tag2('page-member', '<section-header title="Member"></section-header>', '', '', function(opts) {
      dump(this.opts._route)
 });
 
-riot.tag2('page_teams', '<section-header title="Teams"></section-header>', '', '', function(opts) {
+riot.tag2('page-teams', '<section-header title="Teams"></section-header>', '', '', function(opts) {
 });
 
-riot.tag2('page_use-tabs', '<section-header title="Page02"></section-header> <div style="padding-left:55px;"> <page-tabs core="{page_tabs}" callback="{clickTab}"></page-tabs> </div> <div> <page_use-tabs_tab_readme class="hide"></page_use-tabs_tab_readme> <page_use-tabs_tab_tab1 class="hide"></page_use-tabs_tab_tab1> <page_use-tabs_tab_tab2 class="hide"></page_use-tabs_tab_tab2> <page_use-tabs_tab_tab3 class="hide"></page_use-tabs_tab_tab3> <page_use-tabs_tab_help class="hide"></page_use-tabs_tab_help> </div>', '', '', function(opts) {
+riot.tag2('page-use-tabs', '<section-header title="Page02"></section-header> <div style="padding-left:55px;"> <page-tabs core="{page_tabs}" callback="{clickTab}"></page-tabs> </div> <div> <page-use-tabs_tab_readme class="hide"></page-use-tabs_tab_readme> <page-use-tabs_tab-screen-transition-diagram class="hide"></page-use-tabs_tab-screen-transition-diagram> <page-use-tabs_tab-env-config-diagram class="hide"></page-use-tabs_tab-env-config-diagram> <page-use-tabs_tab-e2e-test class="hide"></page-use-tabs_tab-e2e-test> <page-use-tabs_tab-procedures class="hide"></page-use-tabs_tab-procedures> <page-use-tabs_tab-models class="hide"></page-use-tabs_tab-models> <page-use-tabs_tab-components class="hide"></page-use-tabs_tab-components> <page-use-tabs_tab-api class="hide"></page-use-tabs_tab-api> <page-use-tabs_tab-data-store class="hide"></page-use-tabs_tab-data-store> <page-use-tabs_tab-classes class="hide"></page-use-tabs_tab-classes> </div>', '', '', function(opts) {
      this.page_tabs = new PageTabs([
-         {code: 'readme', label: 'README', tag: 'page_use-tabs_tab_readme' },
-         {code: 'tab1',   label: 'TAB1',   tag: 'page_use-tabs_tab_tab1' },
-         {code: 'tab2',   label: 'TAB2',   tag: 'page_use-tabs_tab_tab2' },
-         {code: 'tab3',   label: 'TAB3',   tag: 'page_use-tabs_tab_tab3' },
-         {code: 'help',   label: 'HELP',   tag: 'page_use-tabs_tab_help' },
+         {code: 'readme',     label: 'README',      tag: 'page-use-tabs_tab_readme' },
+         {code: 'tab1',       label: '画面遷移図',  tag: 'page-use-tabs_tab-screen-transition-diagram' },
+         {code: 'tab2',       label: '環境構成図',  tag: 'page-use-tabs_tab-env-config-diagram' },
+         {code: 'tab3',       label: 'E2E テスト',  tag: 'page-use-tabs_tab-e2e-test' },
+         {code: 'procedures', label: 'Procedures',  tag: 'page-use-tabs_tab-procedures' },
+         {code: 'models',     label: 'Models',      tag: 'page-use-tabs_tab-models' },
+         {code: 'components', label: 'Components',  tag: 'page-use-tabs_tab-components' },
+         {code: 'api',        label: 'API',         tag: 'page-use-tabs_tab-api' },
+         {code: 'data-store', label: 'Data Stores', tag: 'page-use-tabs_tab-data-store' },
+         {code: 'classes',    label: 'Classes',     tag: 'page-use-tabs_tab-classes' },
      ]);
 
      this.on('mount', () => {
@@ -238,17 +243,35 @@ riot.tag2('page_use-tabs', '<section-header title="Page02"></section-header> <di
      };
 });
 
-riot.tag2('page_use-tabs_tab_help', '<section class="section"> <div class="container"> <h1 class="title">HELP</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-api', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page_use-tabs_tab_readme', '<section class="section"> <div class="container"> <h1 class="title">README</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-classes', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page_use-tabs_tab_tab1', '<section class="section"> <div class="container"> <h1 class="title">TAB1</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-components', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page_use-tabs_tab_tab2', '<section class="section"> <div class="container"> <h1 class="title">TAB2</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-data-store', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
 });
 
-riot.tag2('page_use-tabs_tab_tab3', '<section class="section"> <div class="container"> <h1 class="title">TAB3</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+riot.tag2('page-use-tabs_tab-e2e-test', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+});
+
+riot.tag2('page-use-tabs_tab-env-config-diagram', '<section class="section"> <div class="container"> <h1 class="title">環境構成図</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+});
+
+riot.tag2('page-use-tabs_tab-models', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+});
+
+riot.tag2('page-use-tabs_tab-procedures', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+});
+
+riot.tag2('page-use-tabs_tab-screen-transition-diagram', '<section class="section"> <div class="container"> <h1 class="title">画面遷移図</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+});
+
+riot.tag2('page-use-tabs_tab_readme', '<section class="section"> <div class="container"> <h1 class="title">README</h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
+});
+
+riot.tag2('page-use-tabs_tab_tab3', '<section class="section"> <div class="container"> <h1 class="title"></h1> <h2 class="subtitle"> </h2> <div class="contents"> </div> </div> </section>', '', '', function(opts) {
 });

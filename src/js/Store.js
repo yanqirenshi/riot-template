@@ -7,36 +7,36 @@ class Store extends Vanilla_Redux_Store {
             {
                 code: "home",
                 menu_label: '家',
-                tag: 'home_page',
+                tag: 'page-home',
             },
             {
                 code: "use-tabs",
                 menu_label: 'タブ',
-                tag: 'page_use-tabs',
+                tag: 'page-use-tabs',
             },
             {
                 code: "have-child",
                 menu_label: '子供',
-                tag: 'page_have-childs',
+                tag: 'page-have-childs',
                 children: [
                     {
                         code: "child01",
-                        tag: 'page_have-childs_page1',
+                        tag: 'page-have-childs_page1',
                     },
                     {
                         code: "child02",
-                        tag: 'page_have-childs_page2',
+                        tag: 'page-have-childs_page2',
                     },
                     {
                         code: "child03",
-                        tag: 'page_have-childs_page3',
+                        tag: 'page-have-childs_page3',
                     },
                 ],
             },
             {
                 code: "teams",
                 menu_label: '集',
-                tag: 'page_teams',
+                tag: 'page-teams',
                 children: [
                     {
                         code: "members",
@@ -45,7 +45,7 @@ class Store extends Vanilla_Redux_Store {
                                 code: "user-id",
                                 regex: /^\d+$/,
                                 // TODO: regex: { contents: /^\d+$/, type: 'integer' },
-                                tag: 'page_member',
+                                tag: 'page-member',
                             },
                         ],
                     },

@@ -1,5 +1,5 @@
-<home_page>
+<page-home>
 
     <section-header title="HOME"></section-header>
 
-</home_page>
+</page-home>

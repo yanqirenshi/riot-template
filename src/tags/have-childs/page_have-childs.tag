@@ -1,4 +1,4 @@
-<page_have-childs>
+<page-have-childs>
 
     <section-header title="Page01"></section-header>
 
@@ -16,4 +16,4 @@
      }
     </script>
 
-</page_have-childs>
+</page-have-childs>

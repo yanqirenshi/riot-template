@@ -1,3 +1,5 @@
-<page_teams>
+<page-teams>
+
     <section-header title="Teams"></section-header>
-</page_teams>
+
+</page-teams>
