@@ -1,0 +1,30 @@
+{
+    "screens" : [
+        {
+            "_id"      : 1,
+            "_class"   : "SCREEN",
+            "name"     : "ログイン画面",
+            "link"     : { "uri" : "#cms/screen01"},
+            "location" : { "x" : 0, "y" : 0}
+        },
+        {
+            "_id"      : 2,
+            "_class"   : "SCREEN",
+            "name"     : "ダッシュボード画面",
+            "link"     : { "uri" : "#cms/screen02"},
+            "location" : { "x" : 300, "y" : 0}
+        },
+        {
+            "_id"        : 3,
+            "_class"     : "SCREEN",
+            "name"       : "オブジェクト一覧画面",
+            "background" : { "color" : "#cca6bf"},
+            "link"       : { "uri" : "#cms/screen03"},
+            "location"   : { "x" : 700, "y" : 0}
+        }
+    ],
+    "edges" : [
+        { "from" : 1, "to" : 2 },
+        { "from" : 2, "to" : 3 }
+    ]
+}

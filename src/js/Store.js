@@ -65,6 +65,10 @@ class Store extends Vanilla_Redux_Store {
                     nodes: [],
                     edges: [],
                 },
+                std: {
+                    screens: [],
+                    edges: [],
+                },
             },
             wbs: {
                 structures: {

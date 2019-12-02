@@ -55,5 +55,19 @@ class Actions extends Vanilla_Redux_Actions {
             data: { diagrams: state },
         };
     }
+    fetchJsonScreenTransitionDiagram () {
+        Request.get('/data/screen-transition-diagram.json', function (response) {
+            STORE.dispatch(this.fetchedJsonScreenTransitionDiagram(response));
+        }.bind(this));
+    }
+    fetchedJsonScreenTransitionDiagram (response) {
+        let state = STORE.get('diagrams');
 
+        state.std = response;
+
+        return {
+            type: 'FETCHED-JSON-ENV-CONFIG-DIAGRAM',
+            data: { std: state },
+        };
+    }
 }

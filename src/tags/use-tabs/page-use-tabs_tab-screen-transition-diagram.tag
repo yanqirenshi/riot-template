@@ -9,11 +9,23 @@
                 <p>参照：<a href="https://github.com/yanqirenshi/Asshole">Asshole (Github)</a></p>
                 <p>TODO：Use <a href="https://github.com/yanqirenshi/D3.Sketch">D3.Sketch (Github)</a></p>
 
-                <screen-transition-diagram source={graph_data}
+                <screen-transition-diagram source={STORE.get('diagrams.std')}
                                            options={graph_options}></screen-transition-diagram>
             </div>
         </div>
     </section>
+
+    <script>
+     this.on('mount', () => {
+         ACTIONS.fetchJsonScreenTransitionDiagram();
+     });
+     STORE.subscribe((action) => {
+         if (action.type=='FETCHED-JSON-ENV-CONFIG-DIAGRAM') {
+             this.update();
+             return;
+         }
+     });
+    </script>
 
     <script>
      this.graph_data = {
